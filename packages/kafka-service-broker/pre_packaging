@@ -1,0 +1,6 @@
+set -e -x
+
+cd ${BUILD_DIR}
+
+cd ${BUILD_DIR}/kafka-service-broker
+mvn -Dmaven.test.skip=true install
