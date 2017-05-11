@@ -20,6 +20,22 @@ instance_groups:
         username: ((cf-admin-username))
         password: ((cf-admin-password))
         skip_ssl_validation: ((cf-skip-ssl-validation))
+- name: broker-delete
+  azs: [z1]
+  instances: 1
+  lifecycle: errand
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: broker-delete
+    release: kafka-service-broker
+    properties:
+      cf:
+        api_url: ((cf-api-url))
+        username: ((cf-admin-username))
+        password: ((cf-admin-password))
+        skip_ssl_validation: ((cf-skip-ssl-validation))
 
 variables:
 - name: broker-password
