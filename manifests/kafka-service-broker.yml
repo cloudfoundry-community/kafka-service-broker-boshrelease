@@ -37,6 +37,47 @@ instance_groups:
         password: ((cf-admin-password))
         skip_ssl_validation: ((cf-skip-ssl-validation))
 
+- name: broker-registrar
+  instances: 1
+  azs: [z1]
+  lifecycle: errand
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: broker-registrar
+    release: broker-registrar
+    properties:
+      servicebroker:
+        url: http://dingo-kafka-broker.((cf-system-domain))
+        name: dingo-kafka
+        username: user
+        password: ((broker-password))
+      cf:
+        api_url: ((cf-api-url))
+        username: ((cf-admin-username))
+        password: ((cf-admin-password))
+        skip_ssl_validation: ((cf-skip-ssl-validation))
+
+- name: broker-deregistrar
+  instances: 1
+  azs: [z1]
+  lifecycle: errand
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: broker-deregistrar
+    release: broker-registrar
+    properties:
+      servicebroker:
+        name: dingo-kafka
+      cf:
+        api_url: ((cf-api-url))
+        username: ((cf-admin-username))
+        password: ((cf-admin-password))
+        skip_ssl_validation: ((cf-skip-ssl-validation))
+
 variables:
 - name: broker-password
   type: password
@@ -54,5 +95,10 @@ update:
   serial: true
 
 releases:
+- name: broker-registrar
+  version: latest
+  # version: 3.0.0
+  # url: https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease?v=3.0.0
+  # sha1: d6486bfe6c76b612ab6e0c2d3e38376ad780f378
 - name: kafka-service-broker
   version: latest
