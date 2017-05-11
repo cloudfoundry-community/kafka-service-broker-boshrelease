@@ -5,6 +5,10 @@ templates:
   bin/run: bin/run
   config/manifest.yml: config/manifest.yml
 
+consumes:
+- name: zookeeper
+  type: zookeeper
+
 properties:
   username:
     description: Service broker basic auth username

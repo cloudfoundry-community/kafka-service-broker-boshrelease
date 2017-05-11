@@ -2,6 +2,23 @@
 name: kafka-service-broker
 
 instance_groups:
+- name: kafka
+  azs: [z1,z2,z3]
+  instances: 1
+  persistent_disk: 10240
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: zookeeper
+    release: bigdata
+    provides:
+      conn: {as: zookeeper}
+  - name: kafka
+    release: bigdata
+  - name: kafka-manager
+    release: bigdata
+
 - name: broker-deploy
   azs: [z1]
   instances: 1
@@ -12,6 +29,8 @@ instance_groups:
   jobs:
   - name: broker-deploy
     release: kafka-service-broker
+    consumes:
+      zookeeper: {from: zookeeper}
     properties:
       username: user
       password: ((broker-password))
@@ -99,5 +118,9 @@ releases:
   version: 3.2.1
   url: https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease?v=3.2.1
   sha1: 137699a07a894a317c3ffcdcdb979af7ffd321c7
+- name: bigdata
+  version: 0.3.0
+  url: https://github.com/cloudfoundry-community/bigdata-boshrelease/releases/download/v0.3.0/bigdata-0.3.0.tgz
+  sha1: 16eb6863f3b486203f8a6545d93bfa3d3c9299cc
 - name: kafka-service-broker
   version: latest

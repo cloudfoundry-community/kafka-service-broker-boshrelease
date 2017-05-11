@@ -8,7 +8,7 @@ applications:
   env:
     SPRING_PROFILES_ACTIVE: cloud
     API_VERSION: '2.10'
-    ZOOKEEPER_HOST: 192.168.16.29:2181 # TODO
+    ZOOKEEPER_HOST: <%= link('zookeeper').instances.first.address %>:<%= link('zookeeper').p("client_port", 2181) %>
     ZOOKEEPER_TIMEOUT: 10000
     SECURITY_USER_NAME: '<%= p("username") %>'
     SECURITY_USER_PASSWORD: '<%= p("password") %>'
