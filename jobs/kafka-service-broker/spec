@@ -19,12 +19,6 @@ properties:
     description: "Port that broker will accept connections on"
     default: 8080
 
-  require_https:
-    description: "Request came in on a secure connection. Expect the load balancer/proxy to set the proper headers (x-forwarded-for, x-forwarded-proto)"
-    default: true
-  ssl.port:
-    description: If this property Tomcat will listen to this port and expect https traffic. If set to -1, Tomcat will not listen for https traffic.
-    default: 8443
   ssl.protocol_header:
     description: The header to look for to determine if ssl termination was performed by a front end load balancer.
     default: x-forwarded-proto
