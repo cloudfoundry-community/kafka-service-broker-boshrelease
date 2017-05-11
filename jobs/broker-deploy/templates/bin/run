@@ -35,8 +35,8 @@ cf auth \
 
 cf target -o $CF_ORG
 org_guid=$(cat $CF_HOME/.cf/config.json | jq -r .OrganizationFields.GUID)
-space_guid=$(cf curl /v2/organizations/$org_guid/spaces\?q=name:$CF_SPACE | jq -r '.resources[0].metadata.guid // ""')
-if [[ -z $space_guid ]]; then
+space_guid=$(cf curl /v2/organizations/$org_guid/spaces\?q=name:$CF_SPACE | jq -r '.resources[0].metadata.guid // "missing"')
+if [[ "${space_guid}" == "missing" ]]; then
   cf create-space $CF_SPACE
   space_guid=$(cf curl /v2/organizations/$org_guid/spaces\?q=name:$CF_SPACE | jq -r '.resources[0].metadata.guid // ""')
 fi
