@@ -7,14 +7,11 @@
   <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
 
   <Service name="Catalina">
-    <% if p("port") != -1 %>
     <Connector class="org.apache.coyote.http11.Http11NioProtocol"
                protocol="HTTP/1.1"
                connectionTimeout="20000"
                port="<%= p('port') %>"
-               bindOnInit="false"
-    />
-    <% end %>
+               bindOnInit="false"/>
 
     <Connector protocol="org.apache.coyote.http11.Http11NioProtocol"
                connectionTimeout="20000"
