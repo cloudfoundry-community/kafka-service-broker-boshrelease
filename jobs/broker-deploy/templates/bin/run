@@ -29,7 +29,13 @@ cf auth \
   ${CF_ADMIN_USERNAME} \
   ${CF_ADMIN_PASSWORD}
 
-cf target -o $CF_ORG -s $CF_SPACE
+cf target -o $CF_ORG
+org_guid=$(cat ~/.cf/config.json | jq -r .OrganizationFields.GUID)
+space_guid=$(cf curl /v2/organizations/$org_guid/spaces\?q=name:$CF_SPACE | jq -r '.resources[0].metadata.guid // ""')
+if [[ -z $space_guid ]]; then
+  cf create-space $CF_SPACE
+  space_guid=$(cf curl /v2/organizations/$org_guid/spaces\?q=name:$CF_SPACE | jq -r '.resources[0].metadata.guid // ""')
+fi
 
 set +e
 cf create-service $REDIS_SERVICE $REDIS_PLAN $REDIS_NAME
