@@ -20,16 +20,13 @@ export JOB_DIR=/var/vcap/jobs/$JOB_NAME
 chmod 755 $JOB_DIR # to access file via symlink
 
 source $JOB_DIR/helpers/ctl_utils.sh
-redirect_output ${output_label}
-
-export HOME=${HOME:-/home/vcap}
 
 # Setup the PATH and LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-''} # default to empty
 for package_dir in $(ls -d /var/vcap/packages/*)
 do
   has_busybox=0
-  # Add all packages' /bin & /sbin into $PATH
+	# Add all packages' /bin & /sbin into $PATH
   for package_bin_dir in $(ls -d ${package_dir}/*bin)
   do
     # Do not add any packages that use busybox, as impacts builtin commands and
@@ -61,6 +58,7 @@ do
 done
 export TMPDIR=$TMP_DIR
 
-PIDFILE=$RUN_DIR/$output_label.pid
+export C_INCLUDE_PATH=/var/vcap/packages/mysqlclient/include/mysql:/var/vcap/packages/sqlite/include:/var/vcap/packages/libpq/include
+export LIBRARY_PATH=/var/vcap/packages/mysqlclient/lib/mysql:/var/vcap/packages/sqlite/lib:/var/vcap/packages/libpq/lib
 
 echo '$PATH' $PATH

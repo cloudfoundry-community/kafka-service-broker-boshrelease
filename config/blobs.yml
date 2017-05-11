@@ -6,7 +6,3 @@ openjdk/openjdk-1.8.0_101-x86_64-trusty.tar.gz:
   size: 77696717
   object_id: d840e5e4-380d-4d89-69e2-200c76c08ac1
   sha: d77ee059e289ae52fb87812f1a2932268427dc26
-tomcat/apache-tomcat-8.0.39.tar.gz:
-  size: 9304967
-  object_id: d3efdd9a-56b9-4a92-47f7-c6a691a96d0f
-  sha: 18c54a81e05df39dec9ac02b143875a29b5502d5

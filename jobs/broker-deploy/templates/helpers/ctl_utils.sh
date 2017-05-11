@@ -153,10 +153,3 @@ check_nfs_mount() {
     fi
   fi
 }
-
-ensure_no_more_tomcat() {
-    for java_pid in $(ps -ef |grep java| grep tomcat |grep -Po '\-DPID=\K[^ ]+'); do
-      echo "[che-kill-tomcat] Found leftover Java process - killing `ps -fp $java_pid`"
-      kill -9 $java_pid
-    done
-}
