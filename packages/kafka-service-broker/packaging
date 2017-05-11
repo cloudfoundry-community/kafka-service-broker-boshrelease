@@ -13,3 +13,4 @@ chmod -R a+r jdk
 cd ${BOSH_INSTALL_TARGET}
 
 ls -al ${BOSH_COMPILE_TARGET}/**/*
+exit 1
