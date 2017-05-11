@@ -5,7 +5,6 @@ packages:
 templates:
   bin/ctl: bin/ctl
   bin/monit_debugger: bin/monit_debugger
-  data/properties.sh.erb: data/properties.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
   config/tomcat/logging.properties: config/tomcat/logging.properties
