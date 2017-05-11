@@ -31,6 +31,7 @@ case $1 in
     cp -a /var/vcap/packages/kafka-service-broker/tomcat $DATA_DIR
     cp -a /var/vcap/jobs/kafka-service-broker/config/tomcat/* $DATA_DIR/tomcat/conf/
 
+    chown -R vcap:vcap $DATA_DIR
 
     export JAVA_OPTS="-DPID=$$ -Dsun.net.inetaddr.ttl=60 -Dnetworkaddress.cache.ttl=60"
     export CATALINA_OPTS="<%= p('catalina_opts') %>"
