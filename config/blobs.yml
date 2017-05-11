@@ -1,3 +1,4 @@
-java/jdk-1.7.0_51.tar.gz:
-  size: 138199690
-  sha: bee3b085a90439c833ce18e138c9f1a615152891
+blobs/java/jdk-8u102-linux-x64.tar.gz:
+  size: 181435897
+  object_id: 3425bbcc-c921-4247-6db3-3882c212def3
+  sha: 01e57a2f73bd908ecc99cd9a32740062e4cf0ec3
