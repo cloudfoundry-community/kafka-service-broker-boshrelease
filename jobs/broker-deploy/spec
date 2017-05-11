@@ -1,6 +1,6 @@
 ---
 name: broker-deploy
-packages: [kafka-service-broker, cf-cli]
+packages: [kafka-service-broker, cf-cli, jq]
 templates:
   bin/run: bin/run
 
