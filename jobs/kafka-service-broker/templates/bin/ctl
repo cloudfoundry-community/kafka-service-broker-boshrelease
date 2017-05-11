@@ -37,11 +37,19 @@ case $1 in
     export CATALINA_OPTS="<%= p('catalina_opts') %>"
 
     cd /var/vcap/data/kafka-service-broker
-    echo "[start] Calling Tomcat start up command"
-    exec chpst -u vcap:vcap tomcat/bin/catalina.sh run
-    echo "[start] Tomcat start up in progress"
+    echo "[start] Running Spring Boot..."
 
-    exec chpst -u vcap:vcap kafka-service-broker \
+    <%
+      redis = link('redis')
+      redis_host = redis.instances.first.address
+      redis_port = redis.p('port')
+      redis_password = redis.p('password')
+    -%>
+    export VCAP_APPLICATION={"name":"kafka-service-broker","instance_id":"FOO"}
+    export VCAP_SERVICES={"mysql":[{"name":"redis","tags":["redis"],"credentials":{"host":"<%= redis_host %>","port":<%= redis_port %>,"password":"<%= redis_password %>"}}]}
+
+
+    exec chpst -u vcap:vcap java -jar kafka-broker.jar \
          >>$LOG_DIR/$JOB_NAME.log 2>&1
 
     ;;

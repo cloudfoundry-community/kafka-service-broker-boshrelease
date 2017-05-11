@@ -11,6 +11,10 @@ templates:
   config/tomcat/server.xml.erb: config/tomcat/server.xml
   config/tomcat/context.xml.erb: config/tomcat/context.xml
 
+consumes:
+- name: redis
+  type: redis
+
 properties:
   catalina_opts:
     description: "The options used to configure Tomcat"

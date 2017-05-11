@@ -25,4 +25,5 @@ rm -rf webapps/*
 
 ls -al ${BOSH_COMPILE_TARGET}/kafka-service-broker/**/*
 
-cp -a ${BOSH_COMPILE_TARGET}/kafka-service-broker/kafka-broker/target/kafka-broker.jar webapps/
+cp -a ${BOSH_COMPILE_TARGET}/kafka-service-broker/kafka-broker/target/kafka-broker.jar .
+# cp -a ${BOSH_COMPILE_TARGET}/kafka-service-broker/kafka-broker/target/kafka-broker.jar webapps/
