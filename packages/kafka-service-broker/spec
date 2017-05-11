@@ -1,4 +1,6 @@
 ---
 name: kafka-service-broker
 dependencies: [java]
-files: [kafka-service-broker/**/*]
+files:
+- kafka-service-broker/**/*
+- openjdk/openjdk*

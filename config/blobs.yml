@@ -2,3 +2,11 @@ java/jdk-8u102-linux-x64.tar.gz:
   size: 181435897
   object_id: 3425bbcc-c921-4247-6db3-3882c212def3
   sha: 01e57a2f73bd908ecc99cd9a32740062e4cf0ec3
+openjdk/openjdk-1.8.0_101-x86_64-mountainlion.tar.gz:
+  size: 75550921
+  object_id: a84b6376-e9f2-4cca-68b4-6d9336705692
+  sha: d9374652844bfd7bcdce8f8b605fb57fd76c9e36
+openjdk/openjdk-1.8.0_101-x86_64-trusty.tar.gz:
+  size: 77696717
+  object_id: d840e5e4-380d-4d89-69e2-200c76c08ac1
+  sha: d77ee059e289ae52fb87812f1a2932268427dc26
