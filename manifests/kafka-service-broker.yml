@@ -17,8 +17,8 @@ instance_groups:
       password: ((broker-password))
       cf:
         api_url: ((cf-api-url))
-        username: ((cf-username))
-        password: ((cf-password))
+        username: ((cf-admin-username))
+        password: ((cf-admin-password))
         skip_ssl_validation: ((cf-skip-ssl-validation))
 
 variables:
