@@ -15,9 +15,11 @@ instance_groups:
     properties:
       username: user
       password: ((broker-password))
-      redis:
-        service_name: dingo-redis
-        service_plan: ready
+      cf:
+        api_url: ((cf-api-url))
+        username: ((cf-username))
+        password: ((cf-password))
+        skip_ssl_validation: ((cf-skip-ssl-validation))
 
 variables:
 - name: broker-password

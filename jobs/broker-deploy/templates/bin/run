@@ -3,10 +3,36 @@
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
-# Setup env vars and folders for the errand script
-source /var/vcap/jobs/broker-deploy/helpers/ctl_setup.sh 'broker-deploy'
+exec 2>&1
 
-############################################################################
+export PATH=$PATH:/var/vcap/packages/cf-cli/bin
 
-# put your errand steps here...
+CF_API_URL='<%= p("cf.api_url") %>'
+CF_ADMIN_USERNAME='<%= p("cf.username") %>'
+CF_ADMIN_PASSWORD='<%= p("cf.password") %>'
+CF_SKIP_SSL_VALIDATION='<%= p("cf.skip_ssl_validation") %>'
 
+CF_ORG='<%= p("cf.org") %>'
+CF_SPACE='<%= p("cf.space") %>'
+
+REDIS_NAME='<%= p("cf.redis.service_instance_name") %>'
+REDIS_SERVICE='<%= p("cf.redis.service_name") %>'
+REDIS_PLAN='<%= p("cf.redis.service_plan") %>'
+
+if [[ ${CF_SKIP_SSL_VALIDATION} == "true" ]]; then
+  cf api ${CF_API_URL} --skip-ssl-validation
+else
+  cf api ${CF_API_URL}
+fi
+
+cf auth \
+  ${CF_ADMIN_USERNAME} \
+  ${CF_ADMIN_PASSWORD}
+
+cf target -o $CF_ORG -s $CF_SPACE
+
+set +e
+cf create-service $REDIS_SERVICE $REDIS_PLAN $REDIS_NAME
+set -e
+
+cf push -f /var/vcap/jobs/broker-deploy/config/manifest.yml
