@@ -46,7 +46,7 @@ case $1 in
       redis_password = redis.p('password')
     -%>
     export VCAP_APPLICATION={"name":"kafka-service-broker","instance_id":"FOO"}
-    export VCAP_SERVICES={"mysql":[{"name":"redis","tags":["redis"],"credentials":{"host":"<%= redis_host %>","port":<%= redis_port %>,"password":"<%= redis_password %>"}}]}
+    export VCAP_SERVICES={"redis":[{"name":"redis","tags":["redis"],"credentials":{"host":"<%= redis_host %>","port":<%= redis_port %>,"password":"<%= redis_password %>"}}]}
 
 
     exec chpst -u vcap:vcap java -jar kafka-broker.jar \
