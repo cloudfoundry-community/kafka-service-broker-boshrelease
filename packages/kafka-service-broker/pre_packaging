@@ -27,11 +27,7 @@ fi
 export PATH=$JAVA_HOME/bin:$PATH
 
 cd ${BUILD_DIR}/kafka-service-broker
-mvn -Dmaven.test.skip=true install
-
-mkdir -p ${BUILD_DIR}/kafka-service-broker/out
-
-cp ~/.m2/repository/io/pivotal/cf/broker/kafka-broker/1.0.0/kafka-broker-1.0.0.jar ${BUILD_DIR}/kafka-service-broker/out
+mvn -Dmaven.test.skip=true package
 
 #clean build data
 mvn clean
@@ -39,4 +35,3 @@ mvn clean
 cd ${BUILD_DIR}
 rm -rf java
 rm -rf openjdk/openjdk-1.8.0_101-x86_64-mountainlion.tar.gz
-
