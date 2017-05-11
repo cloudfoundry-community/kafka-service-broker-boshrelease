@@ -38,6 +38,8 @@ if [[ -z $space_guid ]]; then
   space_guid=$(cf curl /v2/organizations/$org_guid/spaces\?q=name:$CF_SPACE | jq -r '.resources[0].metadata.guid // ""')
 fi
 
+cf marketplace
+
 set +e
 cf create-service $REDIS_SERVICE $REDIS_PLAN $REDIS_NAME
 set -e
