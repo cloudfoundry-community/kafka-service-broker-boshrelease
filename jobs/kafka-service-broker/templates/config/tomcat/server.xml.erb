@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Server port="-1">
+  <Listener className="org.apache.catalina.startup.VersionLoggerListener" />
+  <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
+  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
+
+  <Service name="Catalina">
+    <% if p("port") != -1 %>
+    <Connector class="org.apache.coyote.http11.Http11NioProtocol"
+               protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               port="<%= p('port') %>"
+               bindOnInit="false"
+    />
+    <% end %>
+
+    <% if p("ssl.port") != -1  %>
+    <Connector class="org.apache.coyote.http11.Http11NioProtocol" protocol="HTTP/1.1" connectionTimeout="20000"
+               scheme="https"
+               port="<%= p('ssl.port') %>"
+               SSLEnabled="true"
+               sslEnabledProtocols="TLSv1.2"
+               ciphers="TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+               secure="true"
+               clientAuth="false"
+               sslProtocol="TLS"
+               keystoreFile="/var/vcap/data/kafka-service-broker/keystore.p12"
+               keystoreType="PKCS12"
+               keyAlias="kafka_service_broker_ssl_cert"
+               keystorePass="k0*l*s3cur1tyr0ck$"
+               bindOnInit="false"
+    />
+    <% end %>
+
+
+    <Connector protocol="org.apache.coyote.http11.Http11NioProtocol"
+               connectionTimeout="20000"
+               port="8989"
+               address="127.0.0.1"
+               bindOnInit="true"/>
+    <Engine name="Catalina" defaultHost="localhost">
+
+      <Host name="localhost"
+            appBase="webapps"
+            unpackWARs="true"
+            autoDeploy="false"
+            failCtxIfServletStartFails="true">
+        <Valve className="org.apache.catalina.valves.RemoteIpValve"
+               remoteIpHeader="x-forwarded-for"
+               protocolHeader="<%= p('ssl.protocol_header') %>"
+               internalProxies="<%= internal_proxies %>"
+        />
+        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="/var/vcap/sys/log/kafka-service-broker"
+               prefix="localhost_access" suffix=".log" rotatable="false" pattern="%h %l %u %t &quot;%r&quot; %s %b"/>
+
+      </Host>
+    </Engine>
+  </Service>
+</Server>

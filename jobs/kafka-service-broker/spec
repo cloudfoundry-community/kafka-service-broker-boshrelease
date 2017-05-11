@@ -1,6 +1,31 @@
 ---
 name: kafka-service-broker
-packages: [kafka-service-broker]
+packages:
+- kafka-service-broker
 templates:
-  ignoreme: ignoreme
-properties: {}
+  bin/ctl: bin/ctl
+  bin/monit_debugger: bin/monit_debugger
+  data/properties.sh.erb: data/properties.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+  config/tomcat/logging.properties: config/tomcat/logging.properties
+  config/tomcat/server.xml.erb: config/tomcat/server.xml
+  config/tomcat/context.xml.erb: config/tomcat/context.xml
+
+properties:
+  catalina_opts:
+    description: "The options used to configure Tomcat"
+    default: -Xmx768m -XX:MaxMetaspaceSize=256m
+  port:
+    description: "Port that broker will accept connections on"
+    default: 8080
+
+  require_https:
+    description: "Request came in on a secure connection. Expect the load balancer/proxy to set the proper headers (x-forwarded-for, x-forwarded-proto)"
+    default: true
+  ssl.port:
+    description: If this property Tomcat will listen to this port and expect https traffic. If set to -1, Tomcat will not listen for https traffic.
+    default: 8443
+  ssl.protocol_header:
+    description: The header to look for to determine if ssl termination was performed by a front end load balancer.
+    default: x-forwarded-proto

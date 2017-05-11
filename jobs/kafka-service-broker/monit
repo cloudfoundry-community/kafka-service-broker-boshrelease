@@ -1,0 +1,5 @@
+check process kafka-service-broker
+  with pidfile /var/vcap/sys/run/kafka-service-broker/kafka-service-broker.pid
+  start program "/var/vcap/jobs/kafka-service-broker/bin/monit_debugger ctl '/var/vcap/jobs/kafka-service-broker/bin/ctl start'"
+  stop program "/var/vcap/jobs/kafka-service-broker/bin/monit_debugger ctl '/var/vcap/jobs/kafka-service-broker/bin/ctl stop'"
+  group vcap
