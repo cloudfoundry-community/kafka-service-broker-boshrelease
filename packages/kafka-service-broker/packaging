@@ -21,7 +21,7 @@ fi
 mv apache-tomcat-* tomcat
 
 cd tomcat
-rm -rf webapps/*
+rm -rf tomcat/webapps/*
 
 ls -al ${BOSH_COMPILE_TARGET}/kafka-service-broker/**/*
 

@@ -37,7 +37,7 @@ case $1 in
     export JAVA_OPTS="-DPID=$$ -Dsun.net.inetaddr.ttl=60 -Dnetworkaddress.cache.ttl=60"
     export CATALINA_OPTS="<%= p('catalina_opts') %>"
 
-    cd /var/vcap/data/kafka-service-broker
+    cd /var/vcap/packages/kafka-service-broker
     echo "[start] Running Spring Boot..."
 
     <%
@@ -46,8 +46,8 @@ case $1 in
       redis_port = redis.p('port')
       redis_password = redis.p('password')
     -%>
-    export VCAP_APPLICATION={"name":"kafka-service-broker","instance_id":"FOO"}
-    export VCAP_SERVICES={"redis":[{"name":"redis","tags":["redis"],"credentials":{"host":"<%= redis_host %>","port":<%= redis_port %>,"password":"<%= redis_password %>"}}]}
+    export VCAP_APPLICATION='{"name":"kafka-service-broker","instance_id":"FOO"}'
+    export VCAP_SERVICES='{"redis":[{"name":"redis","tags":["redis"],"credentials":{"host":"<%= redis_host %>","port":<%= redis_port %>,"password":"<%= redis_password %>"}}]}'
 
 
     exec chpst -u vcap:vcap java -jar kafka-broker.jar \
