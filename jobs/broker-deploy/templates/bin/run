@@ -6,6 +6,7 @@ set -u # report the usage of uninitialized variables
 exec 2>&1
 
 export PATH=$PATH:/var/vcap/packages/cf-cli/bin
+export PATH=$PATH:/var/vcap/packages/jq/bin
 
 CF_API_URL='<%= p("cf.api_url") %>'
 CF_ADMIN_USERNAME='<%= p("cf.username") %>'
