@@ -33,6 +33,6 @@ cf auth \
 
 cf target -o $CF_ORG -s $CF_SPACE
 
-cf unbind-service $CF_APPNAME $REDIS_NAME -f
+cf unbind-service $CF_APPNAME $REDIS_NAME
 cf delete-service $REDIS_NAME -f
-cf delete $CF_APPNAME -f
+cf delete $CF_APPNAME -f -r
