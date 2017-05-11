@@ -4,3 +4,4 @@ dependencies: []
 files:
 - kafka-service-broker/**/*
 - openjdk/openjdk*
+- tomcat/apache-tomcat*
