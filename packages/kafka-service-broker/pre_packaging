@@ -30,7 +30,7 @@ cd ${BUILD_DIR}/kafka-service-broker
 mvn -Dmaven.test.skip=true package
 
 #clean build data
-mvn clean
+#mvn clean
 
 cd ${BUILD_DIR}
 rm -rf java

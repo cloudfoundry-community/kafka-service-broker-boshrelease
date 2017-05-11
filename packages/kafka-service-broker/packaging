@@ -12,7 +12,7 @@ chmod -R a+r jdk
 
 cd ${BOSH_INSTALL_TARGET}
 
-tar zxvf ${BOSH_COMPILE_TARGET}/uaa/apache-tomcat-*.tar.gz
+tar zxvf ${BOSH_COMPILE_TARGET}/tomcat/apache-tomcat-8.0.39.tar.gz
 if [[ $? != 0 ]] ; then
   echo "Cannot unpack Tomcat"
   exit 1
@@ -23,4 +23,6 @@ mv apache-tomcat-* tomcat
 cd tomcat
 rm -rf webapps/*
 
-cp -a ${BOSH_COMPILE_TARGET}/kafka-service-broker/kafka-broker/target/kafka-broker.jar webapps/*
+ls -al ${BOSH_COMPILE_TARGET}/kafka-service-broker/**/*
+
+cp -a ${BOSH_COMPILE_TARGET}/kafka-service-broker/kafka-broker/target/kafka-broker.jar webapps/
