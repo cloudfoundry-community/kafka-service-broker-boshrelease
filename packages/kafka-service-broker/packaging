@@ -1,12 +1,15 @@
-set -e # exit immediately if a simple command exits with a non-zero status
-set -u # report the usage of uninitialized variables
+set -e -x
 
-# Detect # of CPUs so make jobs can be parallelized
-CPUS=$(grep -c ^processor /proc/cpuinfo)
- # Available variables
-# $BOSH_COMPILE_TARGET - where this package & spec'd source files are available
-# $BOSH_INSTALL_TARGET - where you copy/install files to be included in package
-export HOME=/var/vcap
+cd ${BOSH_INSTALL_TARGET}
+mkdir jdk && tar zxvf ${BOSH_COMPILE_TARGET}/openjdk/openjdk-1.8.0_101-x86_64-trusty.tar.gz -C jdk
+if [[ $? != 0 ]] ; then
+  echo "Cannot unpack JDK"
+  exit 1
+fi
 
-ls -al **/*
-exit 1
+# latest JDK release didn't have correct permissions
+chmod -R a+r jdk
+
+cd ${BOSH_INSTALL_TARGET}
+
+ls -al ${BOSH_COMPILE_TARGET}/**/*
