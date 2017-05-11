@@ -1,0 +1,4 @@
+---
+name: kafka-service-broker
+dependencies: [java]
+files: [kafka-service-broker/**/*]

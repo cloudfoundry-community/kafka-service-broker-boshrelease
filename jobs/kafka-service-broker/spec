@@ -1,0 +1,6 @@
+---
+name: kafka-service-broker
+packages: [java, kafka-service-broker]
+templates:
+  ignoreme: ignoreme
+properties: {}
