@@ -64,7 +64,8 @@ Server error, status code: 502, error code: 10001, message: Service broker error
 
 This probably means that the `dingo-kafka-broker` application running on Cloud Foundry does not have network access to the Redis service instance.
 
-1. Create security group JSON file, or use the insecure sample `src/everywhere.json`. Preferrably now is the time to [learn more about Application Security Groups](https=... \
+1. Create security group JSON file, or use the insecure sample `src/everywhere.json`. Preferrably now is the time to [learn more about Application Security Groups](https://docs.cloudfoundry.org/concepts/asg.html).
+
 2. Update `public_networks` security group
 
     ```
