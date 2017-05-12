@@ -1,5 +1,28 @@
 # BOSH release for kafka-service-broker
 
+This BOSH release and deployment manifest deploy a cluster of kafka/kafka manager/zookeeper, plus a Cloud Foundry service broker (running on Cloud Foundry).
+
+## Install
+
+```
+export BOSH_ENVIRONMENT=<bosh-alias>
+export BOSH_DEPLOYMENT=kafka-service-broker
+bosh2 deploy manifests/kafka-service-broker.yml
+bosh2 run-errand broker-deploy
+bosh2 run-errand broker-registrar
+```
+
+### Uninstall
+
+To uninstall the service broker and kafka/zookeeper clusters:
+
+```
+export BOSH_ENVIRONMENT=<bosh-alias>
+export BOSH_DEPLOYMENT=kafka-service-broker
+bosh2 run-errand broker-deregistrar
+bosh2 run-errand broker-delete
+bosh2 delete-deployment
+```
 
 ## Issues
 
