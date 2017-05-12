@@ -115,9 +115,9 @@ update:
 
 releases:
 - name: broker-registrar
-  version: 3.2.1
-  url: https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease?v=3.2.1
-  sha1: 137699a07a894a317c3ffcdcdb979af7ffd321c7
+  version: 3.2.2
+  url: https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease?v=3.2.2
+  sha1: f82c6a346d871ccb9835b8e6341f966cf7ebc7c9
 - name: bigdata
   version: 0.3.0
   url: https://github.com/cloudfoundry-community/bigdata-boshrelease/releases/download/v0.3.0/bigdata-0.3.0.tgz
