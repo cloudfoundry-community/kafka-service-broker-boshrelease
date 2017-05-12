@@ -26,7 +26,7 @@ instance_groups:
     release: bigdata
 - name: kafka-manager
   azs: [z1,z2,z3]
-  instances: 3
+  instances: 1
   persistent_disk: 10240
   vm_type: default
   stemcell: default
