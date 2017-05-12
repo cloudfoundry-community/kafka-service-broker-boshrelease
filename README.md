@@ -51,15 +51,15 @@ bosh2 delete-deployment
 ## Issues
 
 
-### Error=... \
+### "Cannot get Jedis connection"
 
-When creating your first service instance, you get an internal Dingo Kafka broker error=... \
+When creating your first service instance, you get an internal Dingo Kafka broker error: `Cannot get Jedis connection`.
 
 ```
 $ cf create-service dingo-kafka topic test
 Creating service instance test in org system / space dingo-kafka as admin...
 FAILED
-Server error, status code=... \
+Server error, status code: 502, error code: 10001, message: Service broker error: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
 ```
 
 This probably means that the `dingo-kafka-broker` application running on Cloud Foundry does not have network access to the Redis service instance.
