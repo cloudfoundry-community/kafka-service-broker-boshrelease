@@ -1,76 +1,37 @@
-# BOSH Release for kafka-service-broker
+# BOSH release for kafka-service-broker
 
-## Usage
 
-To use this bosh release, first upload it to your bosh:
+## Issues
 
-```
-bosh target BOSH_HOST
-git clone https://github.com/cloudfoundry-community/kafka-service-broker-boshrelease.git
-cd kafka-service-broker-boshrelease
-bosh upload release releases/kafka-service-broker/kafka-service-broker-1.yml
-```
 
-For [bosh-lite](https://github.com/cloudfoundry/bosh-lite), you can quickly create a deployment manifest & deploy a cluster. Note that this requires that you have installed [spruce](https://github.com/geofffranks/spruce).
+### Error: Cannot get Jedis connection
+
+When creating your first service instance, you get an internal Dingo Kafka broker error:
 
 ```
-templates/make_manifest warden
-bosh -n deploy
+$ cf create-service dingo-kafka topic test
+Creating service instance test in org system / space dingo-kafka as admin...
+FAILED
+Server error, status code: 502, error code: 10001, message: Service broker error: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
 ```
 
-For AWS EC2, create a single VM:
+This probably means that the `dingo-kafka-broker` application running on Cloud Foundry does not have network access to the Redis service instance.
 
-```
-templates/make_manifest aws-ec2
-bosh -n deploy
-```
+1. Create security group JSON file, or use the insecure sample `src/everywhere.json`
+2. Update `public_networks` security group
 
-### Override security groups
+    ```
+    cf update-security-group public_networks src/everywhere.json
+    ```
 
-For AWS & Openstack, the default deployment assumes there is a `default` security group. If you wish to use a different security group(s) then you can pass in additional configuration when running `make_manifest` above.
+3. Restart `dingo-kafka-broker` application to update its internal networking permissions
 
-Create a file `my-networking.yml`:
+    ```
+    cf restart dingo-kafka-broker
+    ```
 
-``` yaml
----
-networks:
-  - name: kafka-service-broker1
-    type: dynamic
-    cloud_properties:
-      security_groups:
-        - kafka-service-broker
-```
+4. Try provisioning service instance again
 
-Where `- kafka-service-broker` means you wish to use an existing security group called `kafka-service-broker`.
-
-You now suffix this file path to the `make_manifest` command:
-
-```
-templates/make_manifest openstack-nova my-networking.yml
-bosh -n deploy
-```
-
-### Development
-
-As a developer of this release, create new releases and upload them:
-
-```
-bosh create release --force && bosh -n upload release
-```
-
-### Final releases
-
-To share final releases:
-
-```
-bosh create release --final
-```
-
-By default the version number will be bumped to the next major number. You can specify alternate versions:
-
-
-```
-bosh create release --final --version 2.1
-```
-
-After the first release you need to contact [Dmitriy Kalinin](mailto://dkalinin@pivotal.io) to request your project is added to https://bosh.io/releases (as mentioned in README above).
+    ```
+    cf create-service dingo-kafka topic test
+    ```
