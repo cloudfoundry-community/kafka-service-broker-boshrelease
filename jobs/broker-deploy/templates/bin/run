@@ -48,7 +48,7 @@ set +e
 cf create-service $REDIS_SERVICE $REDIS_PLAN $REDIS_NAME
 set -e
 
-echo ** Manifest for broker deployment
+echo "** Manifest for broker deployment"
 cat /var/vcap/jobs/broker-deploy/config/manifest.yml
-echo ** Deploying broker
+echo "** Deploying broker"
 cf push -f /var/vcap/jobs/broker-deploy/config/manifest.yml
