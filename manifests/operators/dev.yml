@@ -1,0 +1,6 @@
+---
+- type: replace
+  path: /releases/name=kafka-service-broker
+  value:
+    name: kafka-service-broker
+    version: latest
