@@ -12,3 +12,9 @@ applications:
     ZOOKEEPER_TIMEOUT: 10000
     SECURITY_USER_NAME: '<%= p("username") %>'
     SECURITY_USER_PASSWORD: '<%= p("password") %>'
+<% if_p("cf.routes") do |routes| -%>
+  routes:
+  <% routes.each do |route| -%>
+  - route: <%= route %>
+  <% end -%>
+<% end %>

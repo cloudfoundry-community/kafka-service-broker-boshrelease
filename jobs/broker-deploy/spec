@@ -35,6 +35,10 @@ properties:
   cf.appname:
     description: Name of broker within CF space
     default: dingo-kafka-broker
+  cf.routes:
+    description: Override the default route (cf.appname + shared apps domain)
+    example:
+    - kafka-broker.system.domain.com
 
   cf.redis.service_instance_name:
     description: 'Name of redis service instance used by broker'
