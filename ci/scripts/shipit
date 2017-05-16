@@ -31,26 +31,32 @@ fi
 
 ###############################################################
 
-cat > ~/.bosh_config << EOF
----
-aliases:
-  target:
-    bosh-lite: ${BOSH_LITE_TARGET}
-auth:
-  ${BOSH_LITE_TARGET}:
-    username: ${BOSH_LITE_USERNAME}
-    password: ${BOSH_LITE_PASSWORD}
-EOF
-cat > ${REPO_ROOT}/config/private.yml << EOF
+header "Setting up bosh2 config..."
+export BOSH_ENVIRONMENT=${BOSH_ENVIRONMENT:?required}
+export BOSH_CA_CERT=${BOSH_CA_CERT:?required}
+export BOSH_CLIENT=${BOSH_CLIENT:?required}
+export BOSH_CLIENT_SECRET=${BOSH_CLIENT_SECRET:?required}
+export BOSH_DEPLOYMENT=${BOSH_DEPLOYMENT:?required}
+
+
+(
+cd ${REPO_ROOT}
+RELEASE_NAME=$(bosh2 int config/final.yml --path /final_name)
+
+cat > config/private.yml << EOF
 ---
 blobstore:
-  s3:
+  provider: s3
+  options:
     access_key_id: ${AWS_ACCESS_KEY}
     secret_access_key: ${AWS_SECRET_KEY}
 EOF
-bosh target ${BOSH_LITE_TARGET}
-(cd ${REPO_ROOT}
- bosh -n create release --final --with-tarball --version "${VERSION}")
+
+
+bosh2 -n create-release --final --version "${VERSION}"
+bosh2 -n create-release releases/$RELEASE_NAME/$RELEASE_NAME-$VERSION.yml \
+              --tarball releases/$RELEASE_NAME/$RELEASE_NAME-$VERSION.tgz
+)
 
 mkdir -p ${RELEASE_ROOT}/artifacts
 echo "v${VERSION}"                         > ${RELEASE_ROOT}/tag
