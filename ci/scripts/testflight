@@ -29,7 +29,6 @@ header "Pulling in any git submodules..."
 git submodule update --init --recursive --force
 
 header "Cleaning up from any previous deployments..."
-bosh target ${BOSH_LITE_TARGET}
 bosh2 -n delete-deployment ${BOSH_LITE_DEPLOYMENT} --force || echo "continuing on..."
 
 apt-get update && apt-get install maven
@@ -38,8 +37,18 @@ bosh2 -n create-release
 bosh2 -n upload-release --rebase || echo "Continuing..."
 
 header "Deploying to ${BOSH_LITE_TARGET}..."
+mkdir -p tmp
+cat > tmp/deployment.yml <<YAML
+---
+- type: replace
+  path: /name
+  value: ${BOSH_DEPLOYMENT:?required}
+YAML
+
 bosh2 -n deploy manifests/kafka-service-broker.yml \
-	--vars-store tmp/creds.yml
+	--vars-store tmp/creds.yml \
+	-o manifests/operators/dev.yml \
+	-o tmp/deployment.yml
 	# -v cf-system-domain=... \
   # -v cf-api-url=... \
   # -v cf-admin-username=... \
