@@ -1,0 +1,46 @@
+---
+meta:
+  name: kafka-service-broker
+  target: sw
+  url: https://ci.starkandwayne.com
+  aws:
+    access_key: AKIAITI2G2YNMJPDJIGA
+    secret_key: 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
+  bosh-lite:
+    deployment: kafka-service-broker-testflight
+    target: https://10.58.111.49:25555
+  github:
+    owner: cloudfoundry-community
+    repo: kafka-service-broker-boshrelease
+    access_token: ad61eb81a447f635d29640a12d26ca599075c08c
+    private_key: |-
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEoAIBAAKCAQEAuMTgdkKk0pjnGfrs1DuH8vCRhp78Rhz/ajeOKKqfyD/xQzvD
+      T6Lhc6kR2/yVUdzy2nKSAowhMEkmA66edU1QOz1WKTO5GbRozhe9PSAI9LJaI8zl
+      dkwx5lg4nEn13USEgsHjZVtWuzxEWLtNDZx7l9bnmZ9fxY7Uv34iy8CsX4KUUAbs
+      MUMw87Da58pBIeInmv/3wZ80yXWid0QXmP+jOEGrcw8CnrPs20dQlpzTesjrip4L
+      Kd761/IdMoSApske6aw90FWm1AIDaURgl17a9D+KzSOHiRpD19b5fxHWg/TbuNli
+      Ho/ZLRfwp/LH+9bNBIAtVp+xKLIWAztVMYDtiQIDAQABAoIBABQ7Oni4g2Or6mIl
+      35i9i/1F6ilbbzQeKLlwq9g4FpbOqZQ7Dv/BTf5kHNiBp7f3AYB52xL8VQX8fHUa
+      wa8GcCqMZMrOJw5xeqhWYRo4T8K7ZLNW1ClH3o7iShCS6KD5x6ipokSO48hMqQ8u
+      MxmycLYHigSANvRi11jAbv7wce9jJUlTgAc3TXekghyzK9f+s6zBhp2z2xaHE984
+      FLNPuTwIAk7gXo/0h2TH3K363Ook3d16/PWxKxysLp+TIq62GkbcphdGMhpYNG6Y
+      C7dNCJ9KNS1jujJWPKBx/Vd3AgO4nNchU2zVdtVVxCU9k52q1x10qkGgdD2QwC9A
+      xr3SNAECgYEA2dND5dVzursjLE+wZyap0Rchs1fCMpWGOm53hdyp4xquJ5XDQZa4
+      HQIyoD3zMJSAnzUS1Nx+4aClkV3U5H68Y5dBSljA6txp03vx+9GaoGQZ8Ia0dOkn
+      BLl3BKTaKKKoUkP74XuzyOuBc+l0b+DNrLK/0EPeJxBPYin32oSF4BkCgYEA2SaL
+      Uwh/q1eXUqdS6UedhcR3sJsmCq4B3xrsZM66VT5aNbSsmDVAVIKh6FxjnHE05BS6
+      gDILTql7hNjnd49Vwf6MvIf7JGcaFf+2fDLCzfVchk/R1Z6B+z3RVmfnbiOz1IZW
+      /Wt2C+AakpzBYbF+iee8F8h02BQ2QtTyyKOHZvECfzZ0moTa2BPWtPRe97rR76JW
+      Jhav2dzLhMMW2sqcX9xmzyMWTboX8+9MnVtyIVoDxiQHIK4WcaH2h23QB2kYRgCf
+      z7LGfXQ5pjs4wUYzIHT4kYOQKY0QvLBxrU975w5Bm9L1LAMy6b9RIQvZUUKm8MQ7
+      67glP2SEr1PbKht3BgECgYAaxbXHtvSGm3X8qsR+HmY9Z8uZ6ob2Kh3w89DRXOt8
+      NwPIO05MNcSIptJvY3SkhRCQTj3wMDtUp3CjIFrpUrKwCEIxvFIqWsvMioplJZz+
+      55FQveaQ/8nmv+hfTtAptB0nxqhS9jzHmgmsqcbt1IRVXEzEYeKGAXfvJXIJap/3
+      AQKBgF1cO/7WBfJoG8R9SOr5zEOW6jR2cTgC4M9WcFEEMA+qPklbPPbqqsX7caS5
+      owykobsG60WKbmjapdeNLm8wzcauiBKSfmjFyG57W4btPuPhtG6f3ynNSi6OZrCY
+      bGLqsj/YHO8cYk55ZoFeo8sfjwrBsiDxNQX7F3wjWhGIqtS8
+      -----END RSA PRIVATE KEY-----
+  slack:
+    channel: Please specify the channel (#name) or user (@user) to send messages to
+    webhook: Please specify your Slack Incoming Webhook Integration URL
