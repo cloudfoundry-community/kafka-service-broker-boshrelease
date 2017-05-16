@@ -44,16 +44,19 @@ cat > tmp/deployment.yml <<YAML
   path: /name
   value: ${BOSH_DEPLOYMENT:?required}
 YAML
+cat > tmp/vars.yml <<YAML
+---
+cf-api-url: ${CF_API_URL:?required}
+cf-admin-username: ${CF_USERNAME:?required}
+cf-admin-password: ${CF_PASSWORD:?required}
+cf-skip-ssl-validation: ${CF_SKIP_SSL_VALIDATION:?required}
+YAML
 
 bosh2 -n deploy manifests/kafka-service-broker.yml \
 	--vars-store tmp/creds.yml \
 	-o manifests/operators/dev.yml \
-	-o tmp/deployment.yml
-	# -v cf-system-domain=... \
-  # -v cf-api-url=... \
-  # -v cf-admin-username=... \
-  # -v cf-admin-password=... \
-  # -v cf-skip-ssl-validation=...
+	-o tmp/deployment.yml \
+	-l tmp/vars.yml
 
 if [[ -n ${TEST_ERRAND} ]]; then
 	header "Running '${TEST_ERRAND}' validation errand"

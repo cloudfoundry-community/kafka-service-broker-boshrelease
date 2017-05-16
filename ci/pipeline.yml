@@ -82,6 +82,10 @@ jobs:
             BOSH_CLIENT:          (( grab meta.bosh-lite.bosh_client ))
             BOSH_CLIENT_SECRET:   (( grab meta.bosh-lite.bosh_client_secret ))
             BOSH_DEPLOYMENT:      (( grab meta.bosh-lite.deployment ))
+            CF_API_URL:             (( grab meta.bosh-lite.cf.api_url ))
+            CF_USERNAME:            (( grab meta.bosh-lite.cf.username ))
+            CF_PASSWORD:            (( grab meta.bosh-lite.cf.password ))
+            CF_SKIP_SSL_VALIDATION: (( grab meta.bosh-lite.cf.skip_ssl_validation ))
             TEST_ERRAND:          (( grab meta.test-errand || ~ ))
       on_failure:
         put: notify

@@ -3,6 +3,7 @@ meta:
   name: kafka-service-broker
   target: sw
   url: https://ci.starkandwayne.com
+  test-errand: broker-deploy
   aws:
     access_key: (( vault "secret/pipelines/kafka-service-broker-boshrelease" "/aws:access_key"))
     secret_key: (( vault "secret/pipelines/kafka-service-broker-boshrelease" "/aws:secret_key"))
@@ -17,6 +18,11 @@ meta:
     bosh_ca_cert: (( vault "secret/bosh-lites/lite49" "/certs:rootCA.pem" ))
     bosh_client: admin
     bosh_client_secret: (( vault "secret/bosh-lites/lite49" "/users/admin:password" ))
+    cf:
+      api_url: (( vault "secret/bosh-lites/lite49" "/cf:api_url" ))
+      username: (( vault "secret/bosh-lites/lite49" "/cf:admin_username" ))
+      password: (( vault "secret/bosh-lites/lite49" "/cf:admin_password" ))
+      skip_ssl_validation: (( vault "secret/bosh-lites/lite49" "/cf:skip_ssl_validation" ))
   slack:
     channel: Please specify the channel (#name) or user (@user) to send messages to
     webhook: Please specify your Slack Incoming Webhook Integration URL
