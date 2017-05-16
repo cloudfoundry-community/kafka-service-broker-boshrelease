@@ -16,17 +16,12 @@ header() {
 	echo
 }
 
-header "Setting up ~/.bosh_config..."
-cat > ~/.bosh_config << EOF
----
-aliases:
-  target:
-    bosh-lite: ${BOSH_LITE_TARGET}
-auth:
-  ${BOSH_LITE_TARGET}:
-    username: ${BOSH_LITE_USERNAME}
-    password: ${BOSH_LITE_PASSWORD}
-EOF
+header "Setting up bosh2 config..."
+export BOSH_ENVIRONMENT=${BOSH_ENVIRONMENT:?required}
+export BOSH_CA_CERT=${BOSH_CA_CERT:?required}
+export BOSH_CLIENT=${BOSH_CLIENT:?required}
+export BOSH_CLIENT_SECRET=${BOSH_CLIENT_SECRET:?required}
+export BOSH_DEPLOYMENT=${BOSH_DEPLOYMENT:?required}
 
 set -e
 cd ${REPO_ROOT}
@@ -35,15 +30,21 @@ git submodule update --init --recursive --force
 
 header "Cleaning up from any previous deployments..."
 bosh target ${BOSH_LITE_TARGET}
-bosh -n delete deployment ${BOSH_LITE_DEPLOYMENT} --force || echo "continuing on..."
+bosh2 -n delete-deployment ${BOSH_LITE_DEPLOYMENT} --force || echo "continuing on..."
 
+apt-get update && apt-get install maven
 header "Creating candidate BOSH release..."
-bosh -n create release
-bosh -n upload release --rebase || echo "Continuing..."
+bosh2 -n create-release
+bosh2 -n upload-release --rebase || echo "Continuing..."
 
-header "Deploying to BOSH-lite..."
-./templates/make_manifest warden
-bosh -n deploy
+header "Deploying to ${BOSH_LITE_TARGET}..."
+bosh2 -n deploy manifests/kafka-service-broker.yml \
+	--vars-store tmp/creds.yml
+	# -v cf-system-domain=... \
+  # -v cf-api-url=... \
+  # -v cf-admin-username=... \
+  # -v cf-admin-password=... \
+  # -v cf-skip-ssl-validation=...
 
 if [[ -n ${TEST_ERRAND} ]]; then
 	header "Running '${TEST_ERRAND}' validation errand"
@@ -51,8 +52,8 @@ if [[ -n ${TEST_ERRAND} ]]; then
 fi
 
 header "Cleaning up..."
-bosh -n delete deployment ${BOSH_LITE_DEPLOYMENT} --force || echo "continuing on..."
-bosh -n cleanup || echo "continuing on..."
+bosh2 -n delete-deployment ${BOSH_LITE_DEPLOYMENT} --force || echo "continuing on..."
+bosh2 -n cleanup || echo "continuing on..."
 
 echo
 echo "SUCCESS"

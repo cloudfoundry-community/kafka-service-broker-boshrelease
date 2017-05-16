@@ -8,7 +8,10 @@ meta:
     secret_key: ae/b0czQaaDrIvD/hSo+qUAwQ6fh/h53jyqU2kSS
   bosh-lite:
     deployment: kafka-service-broker-testflight
-    target: https://10.58.111.49:25555
+    bosh_environment: (( vault "secret/bosh-lites/lite49" "/env:ip" ))
+    bosh_ca_cert: (( vault "secret/bosh-lites/lite49" "/certs:rootCA.pem" ))
+    bosh_client: admin
+    bosh_client_secret: (( vault "secret/bosh-lites/lite49" "/users/admin:password" ))
   github:
     owner: cloudfoundry-community
     repo: kafka-service-broker-boshrelease
