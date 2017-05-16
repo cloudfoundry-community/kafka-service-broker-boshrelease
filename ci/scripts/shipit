@@ -10,6 +10,14 @@
 
 set -eu
 
+header() {
+	echo
+	echo "###############################################"
+	echo
+	echo $*
+	echo
+}
+
 if [[ -z ${VERSION_FROM} ]]; then
   echo >&2 "VERSION_FROM environment variable not set, or empty.  Did you misconfigure Concourse?"
   exit 2
@@ -52,7 +60,7 @@ blobstore:
     secret_access_key: ${AWS_SECRET_KEY}
 EOF
 
-
+header "Create final release..."
 bosh2 -n create-release --final --version "${VERSION}"
 bosh2 -n create-release releases/$RELEASE_NAME/$RELEASE_NAME-$VERSION.yml \
               --tarball releases/$RELEASE_NAME/$RELEASE_NAME-$VERSION.tgz
@@ -69,7 +77,7 @@ cat > ${RELEASE_ROOT}/notification <<EOF
 EOF
 
 
-# GIT!
+header "Update git repo with final release..."
 if [[ -z $(git config --global user.email) ]]; then
   git config --global user.email "ci@starkandwayne.com"
 fi
