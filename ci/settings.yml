@@ -3,7 +3,7 @@ meta:
   name: kafka-service-broker
   target: sw
   url: https://ci.starkandwayne.com
-  test-errand: broker-deploy
+  test-errands: broker-deploy broker-registrar broker-deregistrar broker-delete
   aws:
     access_key: (( vault "secret/pipelines/kafka-service-broker-boshrelease" "/aws:access_key"))
     secret_key: (( vault "secret/pipelines/kafka-service-broker-boshrelease" "/aws:secret_key"))
