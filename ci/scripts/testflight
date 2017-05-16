@@ -57,7 +57,7 @@ bosh2 -n deploy manifests/kafka-service-broker.yml \
 
 if [[ -n ${TEST_ERRAND} ]]; then
 	header "Running '${TEST_ERRAND}' validation errand"
-	bosh -n run errand ${TEST_ERRAND}
+	bosh2 -n run-errand ${TEST_ERRAND}
 fi
 
 header "Cleaning up..."
