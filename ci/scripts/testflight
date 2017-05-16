@@ -46,6 +46,7 @@ cat > tmp/deployment.yml <<YAML
 YAML
 cat > tmp/vars.yml <<YAML
 ---
+cf-system-domain: ${CF_SYSTEM_DOMAIN:?required}
 cf-api-url: ${CF_API_URL:?required}
 cf-admin-username: ${CF_USERNAME:?required}
 cf-admin-password: ${CF_PASSWORD:?required}

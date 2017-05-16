@@ -20,6 +20,7 @@ meta:
     bosh_client_secret: (( vault "secret/bosh-lites/lite49" "/users/admin:password" ))
     cf:
       api_url: (( vault "secret/bosh-lites/lite49" "/cf:api_url" ))
+      system_domain: (( vault "secret/bosh-lites/lite49" "/cf:system_domain" ))
       username: (( vault "secret/bosh-lites/lite49" "/cf:admin_username" ))
       password: (( vault "secret/bosh-lites/lite49" "/cf:admin_password" ))
       skip_ssl_validation: (( vault "secret/bosh-lites/lite49" "/cf:skip_ssl_validation" ))
