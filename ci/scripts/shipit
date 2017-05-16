@@ -18,10 +18,11 @@ header() {
 	echo
 }
 
-if [[ -z ${VERSION_FROM} ]]; then
-  echo >&2 "VERSION_FROM environment variable not set, or empty.  Did you misconfigure Concourse?"
-  exit 2
-fi
+: ${REPO_ROOT:?required}
+: ${RELEASE_ROOT:?required}
+: ${REPO_OUT:?required}
+: ${BRANCH:?required}
+: ${VERSION_FROM:?required}
 if [[ ! -f ${VERSION_FROM} ]]; then
   echo >&2 "Version file (${VERSION_FROM}) not found.  Did you misconfigure Concourse?"
   exit 2
@@ -56,8 +57,8 @@ cat > config/private.yml << EOF
 blobstore:
   provider: s3
   options:
-    access_key_id: ${AWS_ACCESS_KEY}
-    secret_access_key: ${AWS_SECRET_KEY}
+    access_key_id: ${AWS_ACCESS_KEY:?required}
+    secret_access_key: ${AWS_SECRET_KEY:?required}
 EOF
 
 header "Create final release..."
