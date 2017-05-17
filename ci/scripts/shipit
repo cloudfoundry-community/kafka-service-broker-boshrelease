@@ -45,7 +45,6 @@ export BOSH_ENVIRONMENT=${BOSH_ENVIRONMENT:?required}
 export BOSH_CA_CERT=${BOSH_CA_CERT:?required}
 export BOSH_CLIENT=${BOSH_CLIENT:?required}
 export BOSH_CLIENT_SECRET=${BOSH_CLIENT_SECRET:?required}
-export BOSH_DEPLOYMENT=${BOSH_DEPLOYMENT:?required}
 
 
 (
@@ -61,7 +60,11 @@ blobstore:
     secret_access_key: ${AWS_SECRET_KEY:?required}
 EOF
 
+header "Pulling in any git submodules..."
+git submodule update --init --recursive --force
+
 header "Create final release..."
+apt-get update && apt-get install maven -y
 bosh2 -n create-release --final --version "${VERSION}"
 bosh2 -n create-release releases/$RELEASE_NAME/$RELEASE_NAME-$VERSION.yml \
               --tarball releases/$RELEASE_NAME/$RELEASE_NAME-$VERSION.tgz
