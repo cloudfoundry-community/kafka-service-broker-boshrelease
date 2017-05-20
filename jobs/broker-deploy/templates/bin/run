@@ -39,6 +39,12 @@ space_guid=$(cf curl /v2/organizations/$org_guid/spaces\?q=name:$CF_SPACE | jq -
 if [[ "${space_guid}" == "missing" ]]; then
   cf create-space $CF_SPACE
   space_guid=$(cf curl /v2/organizations/$org_guid/spaces\?q=name:$CF_SPACE | jq -r '.resources[0].metadata.guid // ""')
+  
+<% p('cf.security_groups', []).each do |security_group| %>
+  cf bind-security-group  <%= security_group %> $CF_ORG $CF_SPACE
+<% end %>  
+  
+  
 fi
 cf target -o $CF_ORG -s $CF_SPACE
 
