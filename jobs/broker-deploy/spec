@@ -31,10 +31,10 @@ properties:
     default: system
   cf.space:
     description: Space within organization to run broker
-    default: dingo-kafka
+    default: starkandwayne-kafka
   cf.appname:
     description: Name of broker within CF space
-    default: dingo-kafka-broker
+    default: starkandwayne-kafka-broker
   cf.routes:
     description: Override the default route (cf.appname + shared apps domain)
     example:

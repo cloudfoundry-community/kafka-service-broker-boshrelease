@@ -84,8 +84,8 @@ instance_groups:
     release: broker-registrar
     properties:
       servicebroker:
-        url: http://dingo-kafka-broker.((cf-system-domain))
-        name: dingo-kafka
+        url: http://starkandwayne-kafka-broker.((cf-system-domain))
+        name: starkandwayne-kafka
         username: user
         password: ((broker-password))
       cf:
@@ -106,7 +106,7 @@ instance_groups:
     release: broker-registrar
     properties:
       servicebroker:
-        name: dingo-kafka
+        name: starkandwayne-kafka
       cf:
         api_url: ((cf-api-url))
         username: ((cf-admin-username))

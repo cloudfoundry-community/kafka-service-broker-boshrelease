@@ -20,10 +20,10 @@ properties:
     default: system
   cf.space:
     description: Space within organization to run broker
-    default: dingo-kafka
+    default: starkandwayne-kafka
   cf.appname:
     description: Name of broker within CF space
-    default: dingo-kafka-broker
+    default: starkandwayne-kafka-broker
 
   cf.redis.service_instance_name:
     description: 'Name of redis service instance used by broker'

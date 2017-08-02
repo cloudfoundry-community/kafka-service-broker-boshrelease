@@ -20,7 +20,7 @@ bosh2 run-errand broker-registrar
 ```
 
 The `cf-*` variables are used to:
-1. Deploy the `kafka-service-broker` to the `system/dingo-kafka` org/space.
+1. Deploy the `kafka-service-broker` to the `system/starkandwayne-kafka` org/space.
 2. Register the broker as a service broker
 
 If your BOSH has Credhub, then you can omit `--vars-store` flag. It is used to generate any passwords/credentials/certificates required by `manifests/kafka-service-broker.yml`.
@@ -53,16 +53,16 @@ bosh2 delete-deployment
 
 ### "Cannot get Jedis connection"
 
-When creating your first service instance, you get an internal Dingo Kafka broker error: `Cannot get Jedis connection`.
+When creating your first service instance, you get an internal Stark & Wayne Kafka broker error: `Cannot get Jedis connection`.
 
 ```
-$ cf create-service dingo-kafka topic test
-Creating service instance test in org system / space dingo-kafka as admin...
+$ cf create-service starkandwayne-kafka topic test
+Creating service instance test in org system / space starkandwayne-kafka as admin...
 FAILED
 Server error, status code: 502, error code: 10001, message: Service broker error: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
 ```
 
-This probably means that the `dingo-kafka-broker` application running on Cloud Foundry does not have network access to the Redis service instance.
+This probably means that the `starkandwayne-kafka-broker` application running on Cloud Foundry does not have network access to the Redis service instance.
 
 1. Create security group JSON file, or use the insecure sample `src/everywhere.json`. Preferrably now is the time to [learn more about Application Security Groups](https://docs.cloudfoundry.org/concepts/asg.html).
 
@@ -72,14 +72,14 @@ This probably means that the `dingo-kafka-broker` application running on Cloud F
     cf update-security-group public_networks src/everywhere.json
     ```
 
-3. Restart `dingo-kafka-broker` application to update its internal networking permissions
+3. Restart `starkandwayne-kafka-broker` application to update its internal networking permissions
 
     ```
-    cf restart dingo-kafka-broker
+    cf restart starkandwayne-kafka-broker
     ```
 
 4. Try provisioning service instance again
 
     ```
-    cf create-service dingo-kafka topic test
+    cf create-service starkandwayne-kafka topic test
     ```
