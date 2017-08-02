@@ -50,7 +50,7 @@ properties:
     default: redis-for-kafka
   cf.redis.service_name:
     description: 'CF marketplace service name to use to get Redis instance'
-    default: dingo-redis
+    default: p-redis
   cf.redis.service_plan:
     description: 'CF marketplace service plan to use to get Redis instance (from service_name)'
-    default: ready
+    default: shared-vm
