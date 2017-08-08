@@ -66,7 +66,6 @@ header "Pulling in any git submodules..."
 git submodule update --init --recursive --force
 
 header "Create final release..."
-apt-get update && apt-get install maven -y
 bosh2 -n create-release --final --version "${VERSION}"
 bosh2 -n create-release releases/$RELEASE_NAME/$RELEASE_NAME-$VERSION.yml \
               --tarball releases/$RELEASE_NAME/$RELEASE_NAME-$VERSION.tgz
