@@ -175,6 +175,7 @@ jobs:
             RELEASE_ROOT: gh
             REPO_OUT:     pushme
             BRANCH:       (( grab meta.github.branch ))
+            GITHUB_OWNER: (( grab meta.github.owner ))
 
             BOSH_ENVIRONMENT:     (( grab meta.bosh-lite.bosh_environment ))
             BOSH_CA_CERT:         (( grab meta.bosh-lite.bosh_ca_cert ))
