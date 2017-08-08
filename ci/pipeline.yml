@@ -21,7 +21,8 @@ meta:
   image:
     type: docker-image
     source:
-      repository: starkandwayne/concourse
+      repository: starkandwayne/concourse-java
+      tag: "8"
 
   aws:
     bucket:     (( concat meta.pipeline "-pipeline" ))
