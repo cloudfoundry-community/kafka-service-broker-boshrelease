@@ -50,16 +50,6 @@ spruce json tmp/vars.yml > /dev/null
 header "Cleaning up from any previous deployments..."
 bosh2 -n delete-deployment
 
-mkdir -p tmp
-
-# $MANIFEST_VARS can either be "key: value" or "key=value"
-# and will be converted to "key: value" YAML
-echo "${MANIFEST_VARS:-"{} ---"}" | sed -e "s/ *= */: /g" > tmp/vars.yml
-# convert YAML to JSON to check YAML validity
-echo "Variables passed to deployment manifest:"
-cat tmp/vars.yml
-spruce json tmp/vars.yml > /dev/null
-
 header "Creating candidate BOSH release..."
 bosh2 create-release
 bosh2 upload-release --rebase
