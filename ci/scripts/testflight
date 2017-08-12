@@ -34,6 +34,19 @@ if [[ ! -f ${MANIFEST_PATH} ]]; then
 	exit 1
 fi
 
+header "Confirming that \$MANIFEST_VARS is valid"
+mkdir -p tmp
+
+# $MANIFEST_VARS can either be "key: value" or "key=value"
+# and will be converted to "key: value" YAML
+echo "${MANIFEST_VARS:-"{} ---"}" | sed -e "s/ *= */: /g" > tmp/vars.yml
+if [[ ! -z $DEBUG ]]; then
+	echo "Variables passed to deployment manifest:"
+	cat tmp/vars.yml
+fi
+# convert YAML to JSON to check YAML validity
+spruce json tmp/vars.yml > /dev/null
+
 header "Cleaning up from any previous deployments..."
 bosh2 -n delete-deployment
 
