@@ -37,6 +37,16 @@ fi
 header "Cleaning up from any previous deployments..."
 bosh2 -n delete-deployment
 
+mkdir -p tmp
+
+# $MANIFEST_VARS can either be "key: value" or "key=value"
+# and will be converted to "key: value" YAML
+echo "${MANIFEST_VARS:-"{} ---"}" | sed -e "s/ *= */: /g" > tmp/vars.yml
+# convert YAML to JSON to check YAML validity
+echo "Variables passed to deployment manifest:"
+cat tmp/vars.yml
+spruce json tmp/vars.yml > /dev/null
+
 header "Creating candidate BOSH release..."
 bosh2 create-release
 bosh2 upload-release --rebase
@@ -48,8 +58,6 @@ header "Choosing cloud-config options"
 vm_type=$(bosh2 int <(bosh2 cloud-config) --path /vm_types/0/name)
 disk_type=$(bosh2 int <(bosh2 cloud-config) --path /disk_types/0/name)
 network=$(bosh2 int <(bosh2 cloud-config) --path /networks/0/name)
-
-mkdir -p tmp
 
 cat > tmp/deployment.yml <<YAML
 ---
@@ -80,16 +88,13 @@ cat >> tmp/deployment.yml <<YAML
 YAML
 done
 
-# $MANIFEST_VARS can either be "key: value" or "key=value"
-# and will be converted to "key: value" YAML
-echo ${MANIFEST_VARS:-"{} ---"} | sed -e "s/ *= */: /g" > tmp/vars.yml
-
 op_patch_files_flags=""
 for op_patch_file in ${op_patch_files//,/ } ; do
    op_patch_files_flags="${op_patch_files_flags} -o $op_patch_file"
 done
 
 set -x
+
 bosh2 int ${MANIFEST_PATH} \
   -o tmp/deployment.yml    \
   ${op_patch_files_flags}            \
