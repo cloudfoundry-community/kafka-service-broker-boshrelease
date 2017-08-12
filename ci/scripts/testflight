@@ -1,12 +1,10 @@
 #!/bin/bash
 #
-# ci/scripts/create-release-and-deploy
+# ci/scripts/testflight
 #
-# Script for generating Github release / tag assets
-# and managing release notes for a BOSH Release pipeline
+# Script for testing a BOSH release using bosh2
 #
 # author:  James Hunt <james@niftylogic.com>
-# created: 2016-03-30
 
 header() {
 	echo
@@ -16,59 +14,97 @@ header() {
 	echo
 }
 
-header "Setting up bosh2 config..."
-export BOSH_ENVIRONMENT=${BOSH_ENVIRONMENT:?required}
-export BOSH_CA_CERT=${BOSH_CA_CERT:?required}
-export BOSH_CLIENT=${BOSH_CLIENT:?required}
-export BOSH_CLIENT_SECRET=${BOSH_CLIENT_SECRET:?required}
-export BOSH_DEPLOYMENT=${BOSH_DEPLOYMENT:?required}
+#!/bin/bash
 
 set -e
-cd ${REPO_ROOT}
+
+: ${BOSH_ENVIRONMENT:?required}
+: ${BOSH_CA_CERT:?required}
+: ${BOSH_CLIENT:?required}
+: ${BOSH_CLIENT_SECRET:?required}
+: ${BOSH_DEPLOYMENT:?required}
+: ${MANIFEST_PATH:?required}
+
+cd ${REPO_ROOT:?required}
 header "Pulling in any git submodules..."
 git submodule update --init --recursive --force
 
+if [[ ! -f ${MANIFEST_PATH} ]]; then
+	echo "Deployment manifest ${MANIFEST_PATH} does not exist"
+	exit 1
+fi
+
 header "Cleaning up from any previous deployments..."
-bosh2 -n delete-deployment ${BOSH_LITE_DEPLOYMENT} --force || echo "continuing on..."
+bosh2 -n delete-deployment
 
 header "Creating candidate BOSH release..."
-bosh2 -n create-release
-bosh2 -n upload-release --rebase || echo "Continuing..."
+bosh2 create-release
+bosh2 upload-release --rebase
 
-header "Deploying to ${BOSH_LITE_TARGET}..."
+header "Deploying to ${BOSH_ENVIRONMENT}..."
+release_name=$(bosh2 int config/final.yml --path /final_name)
+
+header "Choosing cloud-config options"
+vm_type=$(bosh2 int <(bosh2 cloud-config) --path /vm_types/0/name)
+disk_type=$(bosh2 int <(bosh2 cloud-config) --path /disk_types/0/name)
+network=$(bosh2 int <(bosh2 cloud-config) --path /networks/0/name)
+
 mkdir -p tmp
+
 cat > tmp/deployment.yml <<YAML
 ---
 - type: replace
   path: /name
-  value: ${BOSH_DEPLOYMENT:?required}
-YAML
-cat > tmp/vars.yml <<YAML
----
-cf-system-domain: ${CF_SYSTEM_DOMAIN:?required}
-cf-api-url: ${CF_API_URL:?required}
-cf-admin-username: ${CF_USERNAME:?required}
-cf-admin-password: ${CF_PASSWORD:?required}
-cf-skip-ssl-validation: ${CF_SKIP_SSL_VALIDATION:?required}
+  value: ${BOSH_DEPLOYMENT}
+
+- type: replace
+  path: /releases/name=${release_name}
+  value:
+    name: ${release_name}
+    version: latest
 YAML
 
-bosh2 -n deploy manifests/kafka-service-broker.yml \
-	--vars-store tmp/creds.yml \
-	-o manifests/operators/dev.yml \
-	-o manifests/operators/redis32-free.yml \
-	-o tmp/deployment.yml \
-	-l tmp/vars.yml
+for ig_name in $(spruce json manifests/bigdata.yml | jq -r ".instance_groups[].name"); do
+cat >> tmp/deployment.yml <<YAML
+- type: replace
+  path: /instance_groups/name=${ig_name}/vm_type
+  value: ${vm_type}
 
-if [[ -n ${TEST_ERRANDS} ]]; then
-	for errand in ${TEST_ERRANDS}; do
-		header "Running '${errand}' errand"
-		bosh2 -n run-errand ${errand}
-	done
+- type: replace
+  path: /instance_groups/name=${ig_name}/persistent_disk_type?
+  value: ${disk_type}
+
+- type: replace
+  path: /instance_groups/name=${ig_name}/networks
+  value: [{name: ${vm_type}}]
+YAML
+done
+
+# $MANIFEST_VARS can either be "key: value" or "key=value"
+# and will be converted to "key: value" YAML
+echo ${MANIFEST_VARS:-"{} ---"} | sed -e "s/ *= */: /g" > tmp/vars.yml
+
+op_patch_files_flags=""
+for op_patch_file in ${op_patch_files//,/ } ; do
+   op_patch_files_flags="${op_patch_files_flags} -o $op_patch_file"
+done
+
+set -x
+bosh2 int ${MANIFEST_PATH} \
+  -o tmp/deployment.yml    \
+  ${op_patch_files_flags}            \
+  --vars-store tmp/creds.yml \
+  --vars-file  tmp/vars.yml  \
+  --var-errs \
+    > tmp/manifest.yml
+
+bosh2 -n deploy tmp/manifest.yml
+
+if [[ ! -z $TEST_ERRAND ]]; then
+	bosh2 run-errand "$TEST_ERRAND"
+else
+	echo "No test errand specified, skipping."
 fi
-
-header "Cleaning up..."
-bosh2 -n delete-deployment ${BOSH_LITE_DEPLOYMENT} --force || echo "continuing on..."
-bosh2 -n cleanup || echo "continuing on..."
 
 echo
 echo "SUCCESS"
