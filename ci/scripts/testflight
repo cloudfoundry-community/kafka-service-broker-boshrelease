@@ -92,7 +92,7 @@ YAML
 done
 
 op_patch_files_flags=""
-for op_patch_file in ${op_patch_files//,/ } ; do
+for op_patch_file in ${MANIFEST_OP_PATHS//,/ } ; do
    op_patch_files_flags="${op_patch_files_flags} -o $op_patch_file"
 done
 
