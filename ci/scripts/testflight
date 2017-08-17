@@ -124,10 +124,13 @@ bosh2 int ${MANIFEST_PATH} \
 
 bosh2 -n deploy tmp/manifest.yml
 
-if [[ ! -z $TEST_ERRAND ]]; then
-	bosh2 run-errand "$TEST_ERRAND"
+if [[ -n ${TEST_ERRANDS} ]]; then
+	for errand in ${TEST_ERRANDS}; do
+		header "Running '${errand}' errand"
+		bosh2 -n run-errand ${errand}
+	done
 else
-	echo "No test errand specified, skipping."
+	echo "No test errands specified, skipping."
 fi
 
 echo
