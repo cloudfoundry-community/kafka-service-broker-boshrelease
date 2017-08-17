@@ -139,6 +139,6 @@ releases:
   url: https://github.com/cloudfoundry-community/bigdata-boshrelease/releases/download/v0.6.0/bigdata-0.6.0.tgz
   sha1: 10d7c816232aba771222479bb04b72596671adb5
 - name: kafka-service-broker
-  version: 0.6.1
-  url: https://github.com/cloudfoundry-community/kafka-service-broker-boshrelease/releases/download/v0.6.1/kafka-service-broker-0.6.1.tgz
-  sha1: 6179825bd437fdc48753be0da71bdd87ddb3cd57
+  version: 0.6.2
+  url: https://github.com/cloudfoundry-community/kafka-service-broker-boshrelease/releases/download/v0.6.2/kafka-service-broker-0.6.2.tgz
+  sha1: 9d6ec142eee98e7a07a25dbfb02f4bbfc4bc55cd
