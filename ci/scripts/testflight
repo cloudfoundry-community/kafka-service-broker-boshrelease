@@ -124,6 +124,8 @@ bosh2 int ${MANIFEST_PATH} \
 
 bosh2 -n deploy tmp/manifest.yml
 
+TEST_ERRAND=${TEST_ERRAND:-} # backwards compatibility
+TEST_ERRANDS=${TEST_ERRANDS:-$TEST_ERRAND}
 if [[ -n ${TEST_ERRANDS} ]]; then
 	for errand in ${TEST_ERRANDS}; do
 		header "Running '${errand}' errand"
