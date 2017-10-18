@@ -1,7 +1,7 @@
 ---
 applications:
 - name: <%= p("cf.appname") %>
-  memory: 512M
+  memory: <%= p("cf.appsize") %>
   instances: 1
   path: /var/vcap/packages/kafka-service-broker/target/kafka-broker.jar
   services: [ <%= p("cf.redis.service_instance_name") %> ]

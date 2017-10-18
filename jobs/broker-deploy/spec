@@ -35,6 +35,9 @@ properties:
   cf.appname:
     description: Name of broker within CF space
     default: starkandwayne-kafka-broker
+  cf.appsize:
+    description: Memory size required for the broker
+    default: 1GB
   cf.routes:
     description: Override the default route (cf.appname + shared apps domain)
     example:
