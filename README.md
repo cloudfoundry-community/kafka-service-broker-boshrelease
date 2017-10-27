@@ -7,16 +7,24 @@ This BOSH release and deployment manifest deploy a cluster of kafka/kafka manage
 ```
 export BOSH_ENVIRONMENT=<bosh-alias>
 export BOSH_DEPLOYMENT=kafka-service-broker
-bosh2 deploy manifests/kafka-service-broker.yml \
-  --vars-store tmp/creds.yml \
-  -v cf-system-domain=... \
-  -v cf-api-url=... \
-  -v cf-admin-username=... \
-  -v cf-admin-password=... \
-  -v cf-skip-ssl-validation=...
 
-bosh2 run-errand broker-deploy
-bosh2 run-errand broker-registrar
+# name of cf deployment in BOSH, e.g. 'cf'
+cf_deployment=cf
+
+system_domain=$(bosh -d $cf_deployment manifest | bosh int - --path /instance_groups/name=api/jobs/name=cloud_controller_ng/properties/system_domain)
+skip_verify=$(bosh -d $cf_deployment manifest | bosh int - --path /instance_groups/name=api/jobs/name=cloud_controller_ng/properties/ssl/skip_cert_verify)
+admin_password=$(bosh -d $cf_deployment manifest | bosh int - --path /instance_groups/name=uaa/jobs/name=uaa/properties/uaa/scim/users/name=admin/password)
+
+bosh deploy manifests/kafka-service-broker.yml \
+  --vars-store tmp/creds.yml \
+  -v cf-system-domain=$system_domain \
+  -v cf-api-url=https://api.$system_domain \
+  -v cf-skip-ssl-validation=$skip_verify \
+  -v cf-admin-username=admin \
+  -v "cf-admin-password=$admin_password"
+
+bosh run-errand broker-deploy
+bosh run-errand broker-registrar
 ```
 
 The `cf-*` variables are used to:
@@ -28,7 +36,7 @@ If your BOSH has Credhub, then you can omit `--vars-store` flag. It is used to g
 This deployment assumes you have Dingo Redis installed (`dingo-redis/ready` service/plan). If you are using [`docker-broker-deployment`](https://github.com/cloudfoundry-community/docker-broker-deployment) to deploy `redis32/free`, the include the `manifests/operators/redis32-free.yml` operator patch file in your deploy command:
 
 ```
-bosh2 deploy manifests/kafka-service-broker.yml \
+bosh deploy manifests/kafka-service-broker.yml \
   -o manifests/operators/redis32-free.yml \
   --vars-store tmp/creds.yml \
   ...
@@ -43,9 +51,9 @@ To uninstall the service broker and kafka/zookeeper clusters=... \
 ```
 export BOSH_ENVIRONMENT=<bosh-alias>
 export BOSH_DEPLOYMENT=kafka-service-broker
-bosh2 run-errand broker-deregistrar
-bosh2 run-errand broker-delete
-bosh2 delete-deployment
+bosh run-errand broker-deregistrar
+bosh run-errand broker-delete
+bosh delete-deployment
 ```
 
 ## Issues
