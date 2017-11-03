@@ -38,8 +38,8 @@ meta:
 
   manifest:
     vars: (( concat
-      "\ncf-system-domain="       meta.bosh-lite.cf.api_url
-      "\ncf-api-url="             meta.bosh-lite.cf.system_domain
+      "\ncf-route=kafka-sb-testflight." meta.bosh-lite.cf.broker_route
+      "\ncf-api-url="             meta.bosh-lite.cf.api_url
       "\ncf-admin-username="      meta.bosh-lite.cf.username
       "\ncf-admin-password="      meta.bosh-lite.cf.password
       "\ncf-skip-ssl-validation=" meta.bosh-lite.cf.skip_ssl_validation ))

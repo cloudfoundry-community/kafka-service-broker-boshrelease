@@ -87,7 +87,7 @@ instance_groups:
     release: broker-registrar
     properties:
       servicebroker:
-        url: http://starkandwayne-kafka-broker.((cf-system-domain))
+        url: http://((cf-route))
         name: starkandwayne-kafka
         username: user
         password: ((broker-password))

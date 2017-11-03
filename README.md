@@ -17,7 +17,7 @@ admin_password=$(bosh -d $cf_deployment manifest | bosh int - --path /instance_g
 
 bosh deploy manifests/kafka-service-broker.yml \
   --vars-store tmp/creds.yml \
-  -v cf-system-domain=$system_domain \
+  -v cf-route=kafka-service-broker.$system_domain \
   -v cf-api-url=https://api.$system_domain \
   -v cf-skip-ssl-validation=$skip_verify \
   -v cf-admin-username=admin \
