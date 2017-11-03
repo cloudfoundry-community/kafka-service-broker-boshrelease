@@ -1,0 +1,23 @@
+- type: replace
+  path: /instance_groups/name=zookeeper/networks/name=default/name
+  value: ((kafka_network_name))
+
+- type: replace
+  path: /instance_groups/name=kafka/networks/name=default/name
+  value: ((kafka_network_name))
+
+- type: replace
+  path: /instance_groups/name=kafka-manager/networks/name=default/name
+  value: ((kafka_network_name))
+
+- type: replace
+  path: /instance_groups/name=broker-deploy/networks/name=default/name
+  value: ((kafka_network_name))
+
+- type: replace
+  path: /instance_groups/name=broker-registrar/networks/name=default/name
+  value: ((kafka_network_name))
+
+- type: replace
+  path: /instance_groups/name=broker-deregistrar/networks/name=default/name
+  value: ((kafka_network_name))
