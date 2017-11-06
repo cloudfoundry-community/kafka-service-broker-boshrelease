@@ -10,17 +10,11 @@ export PATH=$PATH:/var/vcap/packages/cf-cli/bin
 export CF_HOME=/var/vcap/data/cf_home
 mkdir -p $CF_HOME
 
-<% if_link("cf") do |cf| -%>
-CF_API_URL='<%= cf.p("api_url") %>'
-CF_ADMIN_USERNAME='<%= cf.p("admin_username") %>'
-CF_ADMIN_PASSWORD='<%= cf.p("admin_password") %>'
+<% cf = nil; if_link("cf") { |link| cf = link } -%>
+CF_API_URL='<%= cf ? cf.p("api_url") : p("cf.api_url") %>'
+CF_ADMIN_USERNAME='<%= cf ? cf.p("admin_username") : p("cf.username") %>'
+CF_ADMIN_PASSWORD='<%= cf ? cf.p("admin_password") : p("cf.password") %>'
 CF_SKIP_SSL_VALIDATION=true
-<% end.else do %>
-CF_API_URL='<%= p("cf.api_url") %>'
-CF_ADMIN_USERNAME='<%= p("cf.username") %>'
-CF_ADMIN_PASSWORD='<%= p("cf.password") %>'
-CF_SKIP_SSL_VALIDATION='<%= p("cf.skip_ssl_validation") %>'
-<% end %>
 
 CF_ORG='<%= p("cf.org") %>'
 CF_SPACE='<%= p("cf.space") %>'
