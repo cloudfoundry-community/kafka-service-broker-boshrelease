@@ -8,8 +8,8 @@ templates:
 consumes:
 - name: zookeeper
   type: zookeeper
-- name: cf
-  type: cf
+- name: cf-admin-user
+  type: api-user
   optional: true
 
 properties:

@@ -5,8 +5,8 @@ templates:
   bin/run: bin/run
 
 consumes:
-- name: cf
-  type: cf
+- name: cf-admin-user
+  type: api-user
   optional: true
 
 properties:
