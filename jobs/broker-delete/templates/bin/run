@@ -10,7 +10,7 @@ export PATH=$PATH:/var/vcap/packages/cf-cli/bin
 export CF_HOME=/var/vcap/data/cf_home
 mkdir -p $CF_HOME
 
-<% cf = nil; if_link("cf") { |link| cf = link } -%>
+<% cf = nil; if_link("cf-admin-user") { |link| cf = link } -%>
 CF_API_URL='<%= cf ? cf.p("api_url") : p("cf.api_url") %>'
 CF_ADMIN_USERNAME='<%= cf ? cf.p("admin_username") : p("cf.username") %>'
 CF_ADMIN_PASSWORD='<%= cf ? cf.p("admin_password") : p("cf.password") %>'
