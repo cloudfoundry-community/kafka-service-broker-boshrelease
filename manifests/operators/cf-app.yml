@@ -1,6 +1,6 @@
 ---
 - type: replace
-  path: /instance_groups/name=broker-deploy/jobs/name=broker-deploy/properties/cf/org?
+  path: /instance_groups/name=broker-deploy/jobs/name=broker-deploy/properties/cf?/org?
   value: ((cf-org))
 
 - type: replace
@@ -17,7 +17,7 @@
     - ((cf-route))
 
 - type: replace
-  path: /instance_groups/name=broker-delete/jobs/name=broker-delete/properties/cf/org?
+  path: /instance_groups/name=broker-delete/jobs/name=broker-delete/properties/cf?/org?
   value: ((cf-org))
 
 - type: replace
