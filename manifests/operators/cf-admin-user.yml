@@ -7,12 +7,11 @@
 - type: replace
   path: /instance_groups/name=broker-deploy/jobs/name=broker-deploy/consumes?/cf
   value:
-    from: cf
+    from: cf-admin-user
     deployment: cf
 
 - type: replace
   path: /instance_groups/name=broker-delete/jobs/name=broker-delete/consumes?/cf
   value:
-    from: cf
+    from: cf-admin-user
     deployment: cf
-
