@@ -15,7 +15,7 @@ CF_API_URL='<%= cf.p("api_url") %>'
 CF_ADMIN_USERNAME='<%= cf.p("admin_username") %>'
 CF_ADMIN_PASSWORD='<%= cf.p("admin_password") %>'
 CF_SKIP_SSL_VALIDATION=true
-<% else.do %>
+<% end.else do %>
 CF_API_URL='<%= p("cf.api_url") %>'
 CF_ADMIN_USERNAME='<%= p("cf.username") %>'
 CF_ADMIN_PASSWORD='<%= p("cf.password") %>'
