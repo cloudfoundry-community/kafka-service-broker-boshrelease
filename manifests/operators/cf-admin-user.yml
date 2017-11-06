@@ -5,13 +5,13 @@
   path: /instance_groups/name=broker-delete/jobs/name=broker-delete/properties/cf
 
 - type: replace
-  path: /instance_groups/name=broker-deploy/jobs/name=broker-deploy/consumes?/cf
+  path: /instance_groups/name=broker-deploy/jobs/name=broker-deploy/consumes?/cf-admin-user
   value:
     from: cf-admin-user
     deployment: cf
 
 - type: replace
-  path: /instance_groups/name=broker-delete/jobs/name=broker-delete/consumes?/cf
+  path: /instance_groups/name=broker-delete/jobs/name=broker-delete/consumes?/cf-admin-user
   value:
     from: cf-admin-user
     deployment: cf
