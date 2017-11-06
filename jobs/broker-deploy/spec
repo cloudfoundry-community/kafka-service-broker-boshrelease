@@ -8,6 +8,9 @@ templates:
 consumes:
 - name: zookeeper
   type: zookeeper
+- name: cf
+  type: cf
+  optional: true
 
 properties:
   username:

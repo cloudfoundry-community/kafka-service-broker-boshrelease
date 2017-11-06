@@ -4,6 +4,11 @@ packages: [cf-cli, jq]
 templates:
   bin/run: bin/run
 
+consumes:
+- name: cf
+  type: cf
+  optional: true
+
 properties:
   cf.api_url:
     description: 'Full URL of Cloud Foundry API'
