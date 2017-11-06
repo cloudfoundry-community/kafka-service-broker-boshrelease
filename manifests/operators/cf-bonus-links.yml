@@ -2,4 +2,4 @@
   path: /instance_groups/name=broker-deploy/jobs/name=broker-deploy/properties/cf
 
 - type: remove
-  path: /instance_groups/name=broker-deploy/jobs/name=broker-delete/properties/cf
+  path: /instance_groups/name=broker-delete/jobs/name=broker-delete/properties/cf
