@@ -1,0 +1,33 @@
+name: kafka-service-broker
+version: 1.0.0
+commit_hash: 7e19ca2
+uncommitted_changes: false
+jobs:
+- name: broker-delete
+  version: e1ea75335100d76e663681d4824e66bfb78c5f4a
+  fingerprint: e1ea75335100d76e663681d4824e66bfb78c5f4a
+  sha1: e754fa629528a7999090cd5f19049a1ce0dcb179
+- name: broker-deploy
+  version: 1b1cf02d80036257ab7900df9f2637c160dda2c9
+  fingerprint: 1b1cf02d80036257ab7900df9f2637c160dda2c9
+  sha1: 23a0e17941534b35057f67f0ef7881770e6e1b10
+packages:
+- name: cf-cli
+  version: 8443ea67c0298cd969a3ab093dfed94b563c5079
+  fingerprint: 8443ea67c0298cd969a3ab093dfed94b563c5079
+  sha1: caecb3a24b8c8d4bf6ceeb4286647d4f7170585f
+  dependencies: []
+- name: jq
+  version: f502bfc65e67f129d21866f86e68f8458bd0ae28
+  fingerprint: f502bfc65e67f129d21866f86e68f8458bd0ae28
+  sha1: 9856e91cda32f43447d6a6ad3dd5969c6a2a5170
+  dependencies: []
+- name: kafka-service-broker
+  version: 45d8f5cc9471efee0c0420d7a14db7258b263b51
+  fingerprint: 45d8f5cc9471efee0c0420d7a14db7258b263b51
+  sha1: cab1b7d64e874a1040257faf72b3964ab97fefb6
+  dependencies: []
+license:
+  version: ac77a509d8b020148f8ce7b3ecce592f89c29c87
+  fingerprint: ac77a509d8b020148f8ce7b3ecce592f89c29c87
+  sha1: 1c96f08f52237d41b65ccd6ed1b7257ea58cc779
