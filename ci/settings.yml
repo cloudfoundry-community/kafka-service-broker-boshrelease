@@ -61,19 +61,25 @@ meta:
       deployment-pr: kafka-sb-testflight-pr
       manifest:
         path:      manifests/kafka-service-broker.yml
-        operators: "manifests/operators/redis32-free.yml" # comma separated list relative to repo root
+        operators: "manifests/operators/cf-app.yml,manifests/operators/redis32-free.yml" # comma separated list relative to repo root
         vars: (( concat
-          "\ncf-route=kafka-sb-testflight." meta.bosh-aws.cf.system_domain
           "\ncf-api-url="             meta.bosh-aws.cf.api_url
           "\ncf-admin-username="      meta.bosh-aws.cf.username
           "\ncf-admin-password="      meta.bosh-aws.cf.password
-          "\ncf-skip-ssl-validation=true" ))
+          "\ncf-skip-ssl-validation=true"
+          "\ncf-org=system"
+          "\ncf-space=kafka-service-broker-boshrelease"
+          "\ncf-appname=kafka-sb-testflight"
+          "\ncf-route=kafka-sb-testflight." meta.bosh-aws.cf.system_domain ))
         vars-pr: (( concat
-          "\ncf-route=kafka-sb-testflight-pr." meta.bosh-aws.cf.system_domain
           "\ncf-api-url="             meta.bosh-aws.cf.api_url
           "\ncf-admin-username="      meta.bosh-aws.cf.username
           "\ncf-admin-password="      meta.bosh-aws.cf.password
-          "\ncf-skip-ssl-validation=true" ))
+          "\ncf-skip-ssl-validation=true"
+          "\ncf-org=system"
+          "\ncf-space=kafka-service-broker-boshrelease"
+          "\ncf-appname=kafka-sb-testflight-pr"
+          "\ncf-route=kafka-sb-testflight-pr." meta.bosh-aws.cf.system_domain ))
 
   slack:
     channel: Please specify the channel (#name) or user (@user) to send messages to
