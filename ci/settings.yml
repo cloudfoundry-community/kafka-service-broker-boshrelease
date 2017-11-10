@@ -6,6 +6,10 @@ meta:
   # commented due to https://github.com/cloudfoundry-community/kafka-service-broker-boshrelease/issues/4
   # test-errands: broker-deploy broker-registrar broker-deregistrar broker-delete
 
+  git:
+    email:  ci@starkandwayne.com
+    name:   "CI Bot"
+
   aws:
     access_key: (( vault "secret/aws/cfcommunity:access" ))
     secret_key: (( vault "secret/aws/cfcommunity:secret" ))
