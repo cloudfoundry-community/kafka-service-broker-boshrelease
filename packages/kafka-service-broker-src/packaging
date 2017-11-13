@@ -1,3 +1,0 @@
-set -e -x
-
-cp -a kafka-service-broker/* ${BOSH_INSTALL_TARGET}/

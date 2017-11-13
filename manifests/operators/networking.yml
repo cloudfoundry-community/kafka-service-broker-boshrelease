@@ -11,7 +11,7 @@
   value: ((kafka_network_name))
 
 - type: replace
-  path: /instance_groups/name=broker-deploy/networks/name=default/name
+  path: /instance_groups/name=kafka-service-broker/networks/name=default/name
   value: ((kafka_network_name))
 
 - type: replace

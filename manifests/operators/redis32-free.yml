@@ -1,7 +1,0 @@
-# If you're running docker-broker-deployment with redis32.yml
----
-- type: replace
-  path: /instance_groups/name=broker-deploy/jobs/name=broker-deploy/properties/cf/redis?
-  value:
-    service_name: redis32
-    service_plan: free
