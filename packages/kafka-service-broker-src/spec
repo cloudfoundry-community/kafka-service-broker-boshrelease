@@ -1,0 +1,5 @@
+---
+name: kafka-service-broker-src
+dependencies: []
+files:
+- kafka-service-broker/**/*

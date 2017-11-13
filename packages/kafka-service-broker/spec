@@ -1,6 +1,5 @@
 ---
 name: kafka-service-broker
-dependencies: []
+dependencies: [golang]
 files:
 - kafka-service-broker/**/*
-- openjdk/openjdk*
