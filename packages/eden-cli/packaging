@@ -1,0 +1,5 @@
+set -eu
+
+mkdir -p $BOSH_INSTALL_TARGET/bin
+cp eden-cli/eden-*-linux-amd64 $BOSH_INSTALL_TARGET/bin/eden
+chmod +x $BOSH_INSTALL_TARGET/bin/eden

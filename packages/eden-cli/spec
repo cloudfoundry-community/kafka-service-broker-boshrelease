@@ -1,0 +1,4 @@
+---
+name: eden-cli
+dependencies: []
+files: [eden-cli/eden-*-linux-amd64]

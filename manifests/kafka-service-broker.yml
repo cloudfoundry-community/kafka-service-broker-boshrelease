@@ -53,6 +53,17 @@ instance_groups:
       username: broker
       password: ((broker-password))
 
+- name: sanity-test
+  azs: [z1,z2,z3]
+  instances: 1
+  lifecycle: errand
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: sanity-test
+    release: kafka-service-broker
+
 variables:
 - name: broker-password
   type: password

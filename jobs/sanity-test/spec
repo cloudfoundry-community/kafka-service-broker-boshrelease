@@ -1,0 +1,11 @@
+---
+name: sanity-test
+packages: [eden-cli]
+templates:
+  bin/run: bin/run
+
+consumes:
+- name: kafka-service-broker
+  type: servicebroker
+
+properties: {}

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+exec 2>&1
+
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+export PATH=/var/vcap/packages/eden-cli/bin:$PATH
+
+############################################################################
+
+<%
+  broker = link("kafka-service-broker")
+  protocol = broker.p("protocol", broker.p("ssl_enabled", false) ? "https" : "http")
+  username = broker.p("username")
+  password = broker.p("password")
+  host = broker.p("external_host", broker.instances.first.address)
+  url = "#{protocol}://#{host}"
+  uri = "#{protocol}://#{username}:#{password}@#{host}"
+  broker.if_p("port") do |broker_port|
+    uri += ":#{broker_port}"
+    url += ":#{broker_port}"
+  end
+%>
+
+echo Service catalog
+export SB_BROKER_URL=<%= url %>
+export SB_BROKER_USERNAME="<%= username %>"
+export SB_BROKER_PASSWORD="<%= password %>"
+
+echo SB_BROKER_URL=<%= url %>
+echo SB_BROKER_USERNAME="<%= username %>"
+echo SB_BROKER_PASSWORD="<%= password %>"
+echo eden catalog
+eden catalog

@@ -1,3 +1,7 @@
+eden-cli/eden-0.6.0-linux-amd64:
+  size: 8454425
+  object_id: 68178d47-5621-4365-67e5-a46b1896b475
+  sha: 5faa96193b1568eddd5e1f73bcfc7b1d6abfdb81
 go/go1.9.2.linux-amd64.tar.gz:
   size: 104247844
   object_id: 9ba57e9e-e64e-4901-759e-7ac5e5635812
