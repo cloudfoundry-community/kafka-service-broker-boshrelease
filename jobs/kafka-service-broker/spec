@@ -24,6 +24,20 @@ properties:
   password:
     description: Service broker basic auth password
 
+  catalog_json:
+    description: Override the entire /v2/catalog response
+    example: {"services":[{"id":"4a9d3e1a-360a-11e7-b547-236ccc0d6fab","name":"starkandwayne-kafka","description":"Apache Kafka","bindable":true,"tags":["kafka"],"plan_updateable":false,"plans":[{"id":"4820d23c-360a-11e7-9547-d78770a33c5b","name":"topic","description":"Share a topic","free":true,"metadata":{}}],"metadata":{"displayName":"Stark \u0026 Wayne Kafka","imageUrl":"https://svn.apache.org/repos/asf/kafka/site/logos/originals/png/ICON%20-%20Black%20on%20Transparent.png","longDescription":"Apache Kafka","providerDisplayName":"Stark \u0026 Wayne","documentationUrl":"https://www.dingotiles.com/dingo-kafka"}}]}
+    default: ""
+  service_guid:
+    description: Override the service GUID
+    default: "4a9d3e1a-360a-11e7-b547-236ccc0d6fab"
+  service_name:
+    description: Override the service name
+    default: starkandwayne-kafka
+  service_plan_topic_guid:
+    description: Override the service plan 'topic' GUID
+    default: "4820d23c-360a-11e7-9547-d78770a33c5b"
+
   port:
     description: Bind to this port
     default: 8080
