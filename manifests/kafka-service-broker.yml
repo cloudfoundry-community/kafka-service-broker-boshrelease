@@ -49,6 +49,9 @@ instance_groups:
     release: bpm
   - name: kafka-service-broker
     release: kafka-service-broker
+    properties:
+      username: broker
+      password: ((broker-password))
 
 variables:
 - name: broker-password

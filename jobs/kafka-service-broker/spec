@@ -18,6 +18,12 @@ provides:
   - port
 
 properties:
+  username:
+    description: Service broker basic auth username
+    default: user
+  password:
+    description: Service broker basic auth password
+
   port:
     description: Bind to this port
     default: 8080

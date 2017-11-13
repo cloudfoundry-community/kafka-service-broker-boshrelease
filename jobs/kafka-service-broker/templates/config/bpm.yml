@@ -7,6 +7,8 @@ processes:
   persistent_disk: false
   env:
     PORT: <%= p("port") %>
+    BROKER_USERNAME: <%= p("username") %>
+    BROKER_PASSWORD: <%= p("password") %>
     <% zks = link('zookeeper'); zk_port = zks.p('client_port') %>
     ZOOKEEPER_PEERS: <%= zks.instances.map { |instance| "#{instance.address}:#{zk_port}" }.join(",") %>
   limits:
