@@ -1,7 +1,7 @@
 ---
 processes:
 - name: kafka-service-broker
-  executable: /var/vcap/packages/kafka-service-broker/bin/kafka-service-broker
+  executable: /var/vcap/packages/kafka-service-broker/bin/broker
   args: []
   ephemeral_disk: true
   persistent_disk: false
