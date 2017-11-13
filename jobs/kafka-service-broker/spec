@@ -16,6 +16,9 @@ provides:
   type: servicebroker
   properties:
   - port
+  - username
+  - password
+  - name
 
 properties:
   username:
@@ -23,6 +26,9 @@ properties:
     default: user
   password:
     description: Service broker basic auth password
+  name:
+    description: Name used to register service broker via "kafka-service-broker" link
+    default: starkandwayne-kafka
 
   catalog_json:
     description: Override the entire /v2/catalog response
