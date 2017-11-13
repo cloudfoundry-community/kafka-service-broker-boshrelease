@@ -1,6 +1,10 @@
 set -e -x
 
-mkdir -p ${BOSH_INSTALL_TARGET}/target/
+tar -zxvf gogs/gogs_linux_amd64_*.tar.gz
 
-cp -a kafka-service-broker/kafka-broker/target/kafka-broker.jar ${BOSH_INSTALL_TARGET}/target/
-cp -a kafka-service-broker/kafka-broker/manifest.yml ${BOSH_INSTALL_TARGET}/
+cd gogs
+rm gogs*.tar.gz
+
+chmod +x gogs
+
+cp -R * ${BOSH_INSTALL_TARGET}

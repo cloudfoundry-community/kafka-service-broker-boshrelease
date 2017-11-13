@@ -1,0 +1,5 @@
+check process kafka-service-broker
+  with pidfile /var/vcap/sys/run/bpm/kafka-service-broker/kafka-service-broker.pid
+  start program "/var/vcap/jobs/bpm/bin/bpm start kafka-service-broker"
+  stop program "/var/vcap/jobs/bpm/bin/bpm stop kafka-service-broker"
+  group vcap

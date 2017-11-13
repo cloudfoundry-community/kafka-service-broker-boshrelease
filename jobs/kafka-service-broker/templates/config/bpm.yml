@@ -1,0 +1,12 @@
+---
+processes:
+- name: kafka-service-broker
+  executable: /var/vcap/packages/kafka-service-broker/bin/kafka-service-broker
+  args: []
+  ephemeral_disk: true
+  persistent_disk: false
+  env:
+    PORT: <%= p("port") %>
+  limits:
+    memory: 128M
+    open_files: 1024

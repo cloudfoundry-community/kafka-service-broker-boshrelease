@@ -1,0 +1,5 @@
+---
+name: go
+dependencies: []
+files:
+- go/go*.linux-amd64.tar.gz

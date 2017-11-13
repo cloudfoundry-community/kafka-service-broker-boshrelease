@@ -1,6 +1,6 @@
 ---
 name: broker-deploy
-packages: [kafka-service-broker, cf-cli, jq]
+packages: [kafka-service-broker-src, cf-cli, jq]
 templates:
   bin/run: bin/run
   config/manifest.yml: config/manifest.yml
@@ -8,6 +8,8 @@ templates:
 consumes:
 - name: zookeeper
   type: zookeeper
+- name: kafka
+  type: kafka
 - name: cf-admin-user
   type: api-user
   optional: true

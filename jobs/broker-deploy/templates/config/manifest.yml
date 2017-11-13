@@ -3,15 +3,10 @@ applications:
 - name: <%= p("cf.appname") %>
   memory: <%= p("cf.appsize") %>
   instances: 1
-  path: /var/vcap/packages/kafka-service-broker/target/kafka-broker.jar
+  path: /var/vcap/packages/kafka-service-broker-src
   services: [ <%= p("cf.redis.service_instance_name") %> ]
   env:
-    SPRING_PROFILES_ACTIVE: cloud
-    API_VERSION: '2.10'
-    ZOOKEEPER_HOST: <%= link('zookeeper').instances.first.address %>:<%= link('zookeeper').p("client_port", 2181) %>
-    ZOOKEEPER_TIMEOUT: 10000
-    SECURITY_USER_NAME: '<%= p("username") %>'
-    SECURITY_USER_PASSWORD: '<%= p("password") %>'
+    KAFKA_HOSTNAMES: <%= link('kafka').instances.first.address %>:<%= link('kafka').p("listen_port", 9092) %>
 <% if_p("cf.routes") do |routes| -%>
   routes:
   <% routes.each do |route| -%>
