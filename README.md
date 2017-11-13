@@ -17,13 +17,13 @@ admin_password=$(bosh -d $cf_deployment manifest | bosh int - --path /instance_g
 
 bosh deploy manifests/kafka-service-broker.yml \
   --vars-store tmp/creds.yml \
+  -o manifests/operators/cf-integration.yml \
   -v cf-route=kafka-service-broker.$system_domain \
   -v cf-api-url=https://api.$system_domain \
   -v cf-skip-ssl-validation=$skip_verify \
   -v cf-admin-username=admin \
   -v "cf-admin-password=$admin_password"
 
-bosh run-errand broker-deploy
 bosh run-errand broker-registrar
 ```
 
