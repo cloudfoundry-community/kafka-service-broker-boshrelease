@@ -1,0 +1,4 @@
+---
+name: bosh-cli
+dependencies: []
+files: [bosh-cli/bosh-cli-*-linux-amd64]

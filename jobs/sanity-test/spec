@@ -1,6 +1,6 @@
 ---
 name: sanity-test
-packages: [eden-cli]
+packages: [eden-cli, bosh-cli]
 templates:
   bin/run: bin/run
 

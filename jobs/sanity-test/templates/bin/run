@@ -6,6 +6,7 @@ set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
 export PATH=/var/vcap/packages/eden-cli/bin:$PATH
+export PATH=/var/vcap/packages/bosh-cli/bin:$PATH
 
 ############################################################################
 
@@ -33,3 +34,21 @@ echo SB_BROKER_USERNAME="<%= username %>"
 echo SB_BROKER_PASSWORD="<%= password %>"
 echo eden catalog
 eden catalog
+
+eden provision -s starkandwayne-kafka
+SB_INSTANCE=$(bosh int ~/.eden/config --path /service_instances/0/id)
+
+eden bind
+
+credentials=$(bosh int ~/.eden/config --path /service_instances/0/bindings/0/credentials)
+topicName=$(bosh int <(echo $credentials) --path /topicName)
+
+errors=
+if [[ "$topicName" != "$SB_INSTANCE" ]]; then
+  echo "ERROR: expected topicName '$topicName' to equal service instance ID '$SB_INSTANCE'"
+  errors=1
+fi
+
+if [[ "$errors" == "1" ]]; then
+  exit 1
+fi
