@@ -1,3 +1,7 @@
+bosh-cli/bosh-cli-2.0.45-linux-amd64:
+  size: 27736768
+  object_id: f96d2cab-9ead-4daf-7d65-a49e8bcf37e2
+  sha: bf04be72daa7da0c9bbeda16fda7fc7b2b8af51e
 eden-cli/eden-0.6.0-linux-amd64:
   size: 8454425
   object_id: 68178d47-5621-4365-67e5-a46b1896b475
