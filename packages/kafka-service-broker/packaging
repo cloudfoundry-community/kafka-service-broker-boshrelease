@@ -7,10 +7,11 @@ REPO_DIR=${BOSH_INSTALL_TARGET}/src/${REPO_NAME}
 
 mkdir -p $(dirname $REPO_DIR)
 
-cp -a $(basename $REPO_NAME)/ $REPO_DIR
+cp -a kafka-service-broker/ $REPO_DIR
 
 export GOROOT=$(readlink -nf /var/vcap/packages/go*)
 export GOPATH=$BOSH_INSTALL_TARGET
 export PATH=$GOROOT/bin:$PATH
 
-go install ${REPO_NAME}
+go install ${REPO_NAME}/cmd/broker
+
