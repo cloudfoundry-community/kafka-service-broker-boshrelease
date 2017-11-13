@@ -38,17 +38,83 @@ instance_groups:
   - name: kafka-manager
     release: kafka
 
-- name: kafka-service-broker
-  azs: [z1,z2,z3]
+- name: broker-deploy
+  azs: [z1]
   instances: 1
+  lifecycle: errand
   vm_type: default
   stemcell: default
   networks: [{name: default}]
   jobs:
-  - name: bpm
-    release: bpm
-  - name: kafka-service-broker
+  - name: broker-deploy
     release: kafka-service-broker
+    consumes:
+      zookeeper: {from: zookeeper}
+    properties:
+      username: user
+      password: ((broker-password))
+      cf:
+        api_url: ((cf-api-url))
+        username: ((cf-admin-username))
+        password: ((cf-admin-password))
+        skip_ssl_validation: ((cf-skip-ssl-validation))
+- name: broker-delete
+  azs: [z1]
+  instances: 1
+  lifecycle: errand
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: broker-delete
+    release: kafka-service-broker
+    properties:
+      cf:
+        api_url: ((cf-api-url))
+        username: ((cf-admin-username))
+        password: ((cf-admin-password))
+        skip_ssl_validation: ((cf-skip-ssl-validation))
+
+- name: broker-registrar
+  instances: 1
+  azs: [z1]
+  lifecycle: errand
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: broker-registrar
+    release: broker-registrar
+    properties:
+      servicebroker:
+        url: http://((cf-route))
+        name: starkandwayne-kafka
+        username: user
+        password: ((broker-password))
+      cf:
+        api_url: ((cf-api-url))
+        username: ((cf-admin-username))
+        password: ((cf-admin-password))
+        skip_ssl_validation: ((cf-skip-ssl-validation))
+
+- name: broker-deregistrar
+  instances: 1
+  azs: [z1]
+  lifecycle: errand
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: broker-deregistrar
+    release: broker-registrar
+    properties:
+      servicebroker:
+        name: starkandwayne-kafka
+      cf:
+        api_url: ((cf-api-url))
+        username: ((cf-admin-username))
+        password: ((cf-admin-password))
+        skip_ssl_validation: ((cf-skip-ssl-validation))
 
 variables:
 - name: broker-password
