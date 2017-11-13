@@ -70,6 +70,7 @@ meta:
           "\ncf-admin-username="      meta.bosh-aws.cf.username
           "\ncf-admin-password="      meta.bosh-aws.cf.password
           "\ncf-skip-ssl-validation=true"
+          "\nkafka-service-broker-name=kafka-sb-testflight"
           "\nkafka-service-guid=kafka-sb-testflight"
           "\nkafka-service-name=kafka-sb-testflight"
           "\nkafka-service-plan-topic-guid=kafka-sb-testflight-topic" ))
@@ -78,6 +79,7 @@ meta:
           "\ncf-admin-username="      meta.bosh-aws.cf.username
           "\ncf-admin-password="      meta.bosh-aws.cf.password
           "\ncf-skip-ssl-validation=true"
+          "\nkafka-service-broker-name=kafka-sb-testflight-pr"
           "\nkafka-service-guid=kafka-sb-testflight-pr"
           "\nkafka-service-name=kafka-sb-testflight-pr"
           "\nkafka-service-plan-topic-guid=kafka-sb-testflight-topic-pr" ))
