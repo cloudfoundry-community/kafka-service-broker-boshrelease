@@ -1,10 +1,16 @@
+#!/usr/bin/env bash
 set -e -x
 
-tar -zxvf gogs/gogs_linux_amd64_*.tar.gz
+REPO_NAME=github.com/starkandwayne/kafka-service-broker
 
-cd gogs
-rm gogs*.tar.gz
+REPO_DIR=${BOSH_INSTALL_TARGET}/src/${REPO_NAME}
 
-chmod +x gogs
+mkdir -p $(dirname $REPO_DIR)
 
-cp -R * ${BOSH_INSTALL_TARGET}
+cp -a $(basename $REPO_NAME)/ $REPO_DIR
+
+export GOROOT=$(readlink -nf /var/vcap/packages/go*)
+export GOPATH=$BOSH_INSTALL_TARGET
+export PATH=$GOROOT/bin:$PATH
+
+go install ${REPO_NAME}
