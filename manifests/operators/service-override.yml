@@ -9,3 +9,7 @@
 - type: replace
   path: /instance_groups/name=kafka-service-broker/jobs/name=kafka-service-broker/properties/service_plan_topic_guid?
   value: ((kafka-service-plan-topic-guid))
+
+- type: replace
+  path: /instance_groups/name=kafka-service-broker/jobs/name=kafka-service-broker/properties/name?
+  value: ((kafka-service-broker-name))
