@@ -8,6 +8,10 @@ set -u # report the usage of uninitialized variables
 export PATH=/var/vcap/packages/eden-cli/bin:$PATH
 export PATH=/var/vcap/packages/bosh-cli/bin:$PATH
 
+export HOME=/var/vcap/sys/run/sanity-test/home
+mkdir -p $HOME
+export EDEN_CONFIG=/var/vcap/sys/run/sanity-test/home/.eden/config
+
 ############################################################################
 
 <%
@@ -36,11 +40,13 @@ echo eden catalog
 eden catalog
 
 eden provision -s starkandwayne-kafka
-SB_INSTANCE=$(bosh int ~/.eden/config --path /service_instances/0/id)
 
+export SB_INSTANCE=$(bosh int $EDEN_CONFIG --path /service_instances/0/id)
 eden bind
 
-credentials=$(bosh int ~/.eden/config --path /service_instances/0/bindings/0/credentials)
+credentials=$(bosh int $EDEN_CONFIG --path /service_instances/0/bindings/0/credentials)
+echo "credentials: $credentials"
+
 topicName=$(bosh int <(echo $credentials) --path /topicName)
 
 errors=
@@ -48,6 +54,10 @@ if [[ "$topicName" != "$SB_INSTANCE" ]]; then
   echo "ERROR: expected topicName '$topicName' to equal service instance ID '$SB_INSTANCE'"
   errors=1
 fi
+
+eden unbind -b $(bosh int $EDEN_CONFIG --path /service_instances/0/bindings/0/id)
+
+eden deprovision
 
 if [[ "$errors" == "1" ]]; then
   exit 1
