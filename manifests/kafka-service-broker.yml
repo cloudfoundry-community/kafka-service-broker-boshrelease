@@ -67,10 +67,6 @@ update:
   serial: true
 
 releases:
-- name: broker-registrar
-  version: 3.2.2
-  url: https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease?v=3.2.2
-  sha1: f82c6a346d871ccb9835b8e6341f966cf7ebc7c9
 - name: bpm
   version: 0.2.0
   url: git+https://github.com/cloudfoundry-incubator/bpm-release
