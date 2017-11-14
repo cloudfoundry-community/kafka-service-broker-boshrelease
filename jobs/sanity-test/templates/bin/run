@@ -47,11 +47,18 @@ eden bind
 credentials=$(bosh int $EDEN_CONFIG --path /service_instances/0/bindings/0/credentials)
 echo "credentials: $credentials"
 
-topicName=$(bosh int <(echo $credentials) --path /topicName)
-
 errors=
+
+topicName=$(bosh int <(echo $credentials) --path /topicName)
+kafkaHostnames=$(bosh int <(echo $credentials) --path /hostname)
+uri=$(bosh int <(echo $credentials) --path /uri)
+
 if [[ "$topicName" != "$SB_INSTANCE" ]]; then
   echo "ERROR: expected topicName '$topicName' to equal service instance ID '$SB_INSTANCE'"
+  errors=1
+fi
+if [[ "$uri" != "kafka://$kafkaHostnames/$topicName" ]]; then
+  echo "ERROR: expected uri 'kafka://$kafkaHostnames/$topicName' to equal '$uri'"
   errors=1
 fi
 
