@@ -7,8 +7,8 @@ meta:
   test-errands: sanity-test
 
   git:
-    email:  ci@starkandwayne.com
-    name:   "CI Bot"
+    email:  drnic+bot@starkandwayne.com
+    name:   "Stark & Wayne CI Bot"
 
   aws:
     access_key: (( vault "secret/aws/cfcommunity:access" ))
@@ -85,8 +85,10 @@ meta:
           "\nkafka-service-plan-topic-guid=kafka-sb-testflight-topic-pr" ))
 
   slack:
-    channel: Please specify the channel (#name) or user (@user) to send messages to
-    webhook: Please specify your Slack Incoming Webhook Integration URL
+    webhook: (( vault "secret/pipelines/bigdata-boshrelease/slack:webhook" ))
+    channel: '#bigdata-boshrelease'
+    username:      starkandwayne-ci
+    icon:          https://www.starkandwayne.com/assets/images/shield-blue-50x50.png
 
   image:
     name: starkandwayne/concourse-java
