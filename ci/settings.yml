@@ -15,7 +15,7 @@ meta:
     secret_key: (( vault "secret/aws/cfcommunity:secret" ))
 
   github:
-    branch: v2-golang-broker
+    branch: master
     owner: cloudfoundry-community
     repo: kafka-service-broker-boshrelease
     private_key:  (( vault "secret/pipelines/shared/github:private_key" ))
