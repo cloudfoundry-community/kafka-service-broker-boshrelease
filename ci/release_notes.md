@@ -18,3 +18,4 @@
   The property `delete.topic.enable=true` is already enabled in the `manifests/kafka-service-broker.yml` via the `kafka-boshrelease` defaults.
 
 * `sanity-test` errand uses `eden` CLI to show catalog/provision/bind/unbind/deprovision against a service broker for both service plans
+* `kafka-service-broker` new property `documentation_url` to override the default URL to find documentation

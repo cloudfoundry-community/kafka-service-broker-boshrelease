@@ -17,6 +17,8 @@ processes:
     BROKER_SERVICE_NAME: "<%= p("service_name") %>"
     BROKER_PLAN0_GUID:   "<%= p("service_plan_topic_guid") %>"
     BROKER_PLAN1_GUID:   "<%= p("service_plan_shared_guid") %>"
+
+    CATALOG_DOCUMENTATION_URL: "<%= p("documentation_url") %>"
   limits:
     memory: 128M
     open_files: 1024

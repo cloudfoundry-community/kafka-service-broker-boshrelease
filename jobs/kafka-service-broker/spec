@@ -46,6 +46,9 @@ properties:
   service_plan_shared_guid:
     description: Override the service plan 'shared' GUID
     default: "02fd92c8-c997-11e7-8c02-b7c8cd91bf14"
+  documentation_url:
+    description: URL to additional documentation
+    default: https://github.com/starkandwayne/kafka-service-broker/
 
   port:
     description: Bind to this port
