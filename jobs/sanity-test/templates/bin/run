@@ -36,19 +36,42 @@ export SB_BROKER_PASSWORD="<%= password %>"
 echo SB_BROKER_URL=<%= url %>
 echo SB_BROKER_USERNAME="<%= username %>"
 echo SB_BROKER_PASSWORD="<%= password %>"
-echo eden catalog
+
+# The rest is copied from src/kafka-service-broker/bin/sanity-test
+# TODO: perhaps use the actual file from this repo via a specific package?
+
+function header() {
+  echo
+  echo "########"
+  echo "$@"
+  echo
+}
+
+export EDEN_CONFIG=${EDEN_CONFIG:-tmp/eden_config_sanity_test}
+mkdir -p $(dirname $EDEN_CONFIG)
+rm -rf $EDEN_CONFIG
+
+export SB_BROKER_URL=${SB_BROKER_URL:-http://localhost:8100}
+export SB_BROKER_USERNAME=${SB_BROKER_USERNAME:-}
+export SB_BROKER_PASSWORD=${SB_BROKER_PASSWORD:-}
+
+header "Catalog"
 eden catalog
+echo
 
-eden provision -s starkandwayne-kafka
+errors=
 
+header "Provision 'topic' plan"
+eden provision -s starkandwayne-kafka -p topic
+
+header "Bind 'topic' plan"
 export SB_INSTANCE=$(bosh int $EDEN_CONFIG --path /service_instances/0/id)
 eden bind
 
 credentials=$(bosh int $EDEN_CONFIG --path /service_instances/0/bindings/0/credentials)
 echo "credentials: $credentials"
 
-errors=
-
+header "Test 'topic' plan credentials"
 topicName=$(bosh int <(echo $credentials) --path /topicName)
 kafkaHostnames=$(bosh int <(echo $credentials) --path /hostname)
 uri=$(bosh int <(echo $credentials) --path /uri)
@@ -62,8 +85,49 @@ if [[ "$uri" != "kafka://$kafkaHostnames/$topicName" ]]; then
   errors=1
 fi
 
+header "Unbind 'topic' plan"
 eden unbind -b $(bosh int $EDEN_CONFIG --path /service_instances/0/bindings/0/id)
 
+header "Deprovision 'topic' plan"
+eden deprovision
+
+if [[ "$errors" == "1" ]]; then
+  exit 1
+fi
+
+
+rm -rf $EDEN_CONFIG
+errors=
+
+header "Provision 'shared' plan"
+eden provision -s starkandwayne-kafka -p shared
+
+header "Bind 'shared' plan"
+export SB_INSTANCE=$(bosh int $EDEN_CONFIG --path /service_instances/0/id)
+eden bind
+
+credentials=$(bosh int $EDEN_CONFIG --path /service_instances/0/bindings/0/credentials)
+echo
+echo "credentials: $credentials"
+
+header "Test 'shared' plan credentials"
+topicNamePrefix=$(bosh int <(echo $credentials) --path /topicNamePrefix)
+kafkaHostnames=$(bosh int <(echo $credentials) --path /hostname)
+uri=$(bosh int <(echo $credentials) --path /uri)
+
+if [[ "$topicNamePrefix" != "$SB_INSTANCE" ]]; then
+  echo "ERROR: expected topicNamePrefix '$topicNamePrefix' to equal service instance ID '$SB_INSTANCE'"
+  errors=1
+fi
+if [[ "$uri" != "kafka://$kafkaHostnames" ]]; then
+  echo "ERROR: expected uri 'kafka://$kafkaHostnames' to equal '$uri'"
+  errors=1
+fi
+
+header "Unbind 'shard' plan"
+eden unbind -b $(bosh int $EDEN_CONFIG --path /service_instances/0/bindings/0/id)
+
+header "Deprovision 'shared' plan"
 eden deprovision
 
 if [[ "$errors" == "1" ]]; then
