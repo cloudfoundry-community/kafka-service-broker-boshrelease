@@ -89,8 +89,7 @@ releases:
   url: git+https://github.com/cppforlife/zookeeper-release
 - name: kafka
   version: 1.1.0
-  url: https://github.com/cloudfoundry-community/kafka-boshrelease/releases/download/v1.1.0/kafka-1.1.0.tgz
-  sha1: f32e51f42d1b451eece1605730f4addbed271d97
+  url: git+https://github.com/cloudfoundry-community/kafka-boshrelease
 - name: kafka-service-broker
   version: 2.0.1
   url: https://github.com/cloudfoundry-community/kafka-service-broker-boshrelease/releases/download/v2.0.1/kafka-service-broker-2.0.1.tgz
