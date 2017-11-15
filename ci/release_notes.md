@@ -20,3 +20,4 @@
 * `sanity-test` errand uses `eden` CLI to show catalog/provision/bind/unbind/deprovision against a service broker for both service plans
 * `kafka-service-broker` catalog override properties are now nested under `catalog.` prefix. Operator file changed to `manifests/operators/catalog-override.yml`
 * `kafka-service-broker` new property `catalog.documentation_url` to override the default URL to find documentation
+* Bumped kafka-boshrelease to v1.1.1

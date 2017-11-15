@@ -87,15 +87,15 @@ update:
 
 releases:
 - name: bpm
-  version: 0.2.0
   url: git+https://github.com/cloudfoundry-incubator/bpm-release
+  version: 0.2.0
 - name: zookeeper
-  version: 0.0.7
   url: git+https://github.com/cppforlife/zookeeper-release
+  version: 0.0.7
 - name: kafka
-  version: 1.1.0
   url: git+https://github.com/cloudfoundry-community/kafka-boshrelease
+  version: 1.1.1
 - name: kafka-service-broker
-  version: 2.0.1
-  url: https://github.com/cloudfoundry-community/kafka-service-broker-boshrelease/releases/download/v2.0.1/kafka-service-broker-2.0.1.tgz
   sha1: e827f5894b7a9db6fe7eccbec06e17bab06db8f8
+  url: https://github.com/cloudfoundry-community/kafka-service-broker-boshrelease/releases/download/v2.0.1/kafka-service-broker-2.0.1.tgz
+  version: 2.0.1
