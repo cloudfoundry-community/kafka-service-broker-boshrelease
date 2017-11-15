@@ -89,6 +89,7 @@ meta:
     channel: '#bigdata-boshrelease'
     username:      starkandwayne-ci
     icon:          https://www.starkandwayne.com/assets/images/shield-blue-50x50.png
+    release_success:  "$BUILD_PIPELINE_NAME: New version of $BUILD_JOB_NAME was detected, and updated base manifests in master branch."
 
   image:
     name: starkandwayne/concourse-java
@@ -98,6 +99,9 @@ groups:
 - name: aws
   jobs:
   - testflight-aws-broker
+- name: releases
+  jobs:
+  - kafka-boshrelease
 
 jobs:
 - name: testflight-aws-broker
@@ -146,3 +150,52 @@ jobs:
         username: (( grab meta.slack.username ))
         icon_url: (( grab meta.slack.icon ))
         text:    '(( concat meta.slack.fail_url " " meta.pipeline ": testflight job failed" ))'
+
+- name: kafka-boshrelease
+  public: true
+  plan:
+  - aggregate:
+    - { get: git }
+    - { get: kafka-boshrelease, trigger: true, params: { tarball: false }}
+  - task: bump-version
+    config:
+      image_resource:
+        type: docker-image
+        source:
+          repository: (( grab meta.image.name ))
+          tag:        (( grab meta.image.tag ))
+      platform: linux
+      inputs:
+      - name: git
+      - name: kafka-boshrelease
+      outputs:
+      - name: pushme
+      run:
+        path: ./git/ci/scripts/bump-release
+      params:
+        REPO_ROOT: git
+        REPO_OUT:  pushme
+        RELEASE:   kafka-boshrelease
+        NAME:      kafka-boshrelease
+        GIT_EMAIL: (( grab meta.git.email ))
+        GIT_NAME:  (( grab meta.git.name ))
+  - name: upload-git
+    put: git
+    params:
+      rebase: true
+      repository: pushme
+    on_success:
+      put: notify
+      params:
+        channel:  (( grab meta.slack.channel ))
+        username: (( grab meta.slack.username ))
+        icon_url: (( grab meta.slack.icon ))
+        text:     (( grab meta.slack.release_success ))
+
+resources:
+  - name: kafka-boshrelease
+    type: github-release
+    source:
+      access_token: (( grab meta.github.access_token ))
+      user: cloudfoundry-community
+      repository: kafka-boshrelease
