@@ -9,11 +9,12 @@
         "kafka"
       ],
       "metadata":{
-        "displayName":"Stark & Wayne Kafka",
-        "imageUrl":"https://svn.apache.org/repos/asf/kafka/site/logos/originals/png/ICON%20-%20Black%20on%20Transparent.png",
-        "longDescription":"Apache Kafka",
-        "providerDisplayName":"Stark & Wayne",
-        "documentationUrl":"<%= p('catalog.documentation_url') %>"
+        "displayName":"<%= p('catalog.displayName') %>",
+        "imageUrl":"<%= p('catalog.imageUrl') %>",
+        "longDescription":"<%= p('catalog.longDescription') %>",
+        "providerDisplayName":"<%= p('catalog.providerDisplayName') %>",
+        "documentationUrl":"<%= p('catalog.documentationUrl') %>",
+        "supportUrl":"<%= p('catalog.supportUrl') %>"
       },
       "plans":[
         {

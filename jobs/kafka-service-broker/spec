@@ -47,9 +47,24 @@ properties:
   catalog.service_plan_shared_guid:
     description: Override the service plan 'shared' GUID
     default: "02fd92c8-c997-11e7-8c02-b7c8cd91bf14"
-  catalog.documentation_url:
+  catalog.displayName:
+    description: Name of service in marketplace
+    default: Stark & Wayne Kafka
+  catalog.imageUrl:
+    description: URL to image for marketplace
+    default: https://svn.apache.org/repos/asf/kafka/site/logos/originals/png/ICON%20-%20Black%20on%20Transparent.png
+  catalog.longDescription:
+    description: Long description of service in marketplace
+    default: Apache Kafka used for building real-time data pipelines and streaming apps. It is horizontally scalable, fault-tolerant, wicked fast, and runs in production in thousands of companies.
+  catalog.providerDisplayName:
+    description: Provider of the service in marketplace for support and love
+    default: Stark & Wayne
+  catalog.documentationUrl:
     description: URL to additional documentation
     default: https://github.com/starkandwayne/kafka-service-broker/
+  catalog.supportUrl:
+    description: URL for support
+    default: https://github.com/starkandwayne/kafka-service-broker/issues
 
   port:
     description: Bind to this port
