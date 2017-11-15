@@ -55,7 +55,7 @@ properties:
     default: https://svn.apache.org/repos/asf/kafka/site/logos/originals/png/ICON%20-%20Black%20on%20Transparent.png
   catalog.longDescription:
     description: Long description of service in marketplace
-    default: Apache Kafka used for building real-time data pipelines and streaming apps. It is horizontally scalable, fault-tolerant, wicked fast, and runs in production in thousands of companies.
+    default: Apache Kafka is used for building real-time data pipelines and streaming apps. It is horizontally scalable, fault-tolerant, wicked fast, and runs in production in thousands of companies.
   catalog.providerDisplayName:
     description: Provider of the service in marketplace for support and love
     default: Stark & Wayne

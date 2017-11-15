@@ -22,7 +22,11 @@
           "name":"topic",
           "description":"Share a single topic on shared Kafka",
           "metadata": {
-            "cost": 0
+            "cost": 0,
+            "bullets": [
+              "Each instance shares same Kafka/ZooKeeper cluster",
+              "Kafka Topic pre-provisioned. See topicName credential."
+            ]
           },
           "free": true
         },
@@ -31,7 +35,11 @@
           "name":"shared",
           "description":"Create your own topics on shared Kafka",
           "metadata": {
-            "cost": 0
+            "cost": 0,
+            "bullets": [
+              "Each instance shares same Kafka/ZooKeeper cluster",
+              "Provison own Kafka Topics. Prefix your topic names with topicNamePrefix from credentials."
+            ]
           },
           "free": true
         }
