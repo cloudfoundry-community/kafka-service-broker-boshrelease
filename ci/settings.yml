@@ -172,7 +172,7 @@ jobs:
         REPO_ROOT: git
         REPO_OUT:  pushme
         RELEASE:   kafka-boshrelease
-        NAME:      kafka-boshrelease
+        NAME:      kafka
         GIT_EMAIL: (( grab meta.git.email ))
         GIT_NAME:  (( grab meta.git.name ))
   - name: upload-git

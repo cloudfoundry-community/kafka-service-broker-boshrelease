@@ -72,10 +72,10 @@ for manifest_path in $(ls manifests/*.yml); do
 done
 
 cat <<EOF >>ci/release_notes.md
-* Bumped ${NAME} to v${version}
+* Bumped ${RELEASE} to v${version}
 EOF
 
 git merge --no-edit ${BRANCH}
 git add -A
 git status
-git commit -m "bump ${NAME} v${version}"
+git commit -m "bump ${RELEASE} v${version}"
