@@ -4,6 +4,7 @@ name: kafka-service-broker
 packages: [kafka-service-broker]
 templates:
   config/bpm.yml: config/bpm.yml
+  config/catalog.json: config/catalog.json
 
 # Documentation https://bosh.io/docs/links.html
 # Tutorial      https://gist.github.com/Amit-PivotalLabs/c39528248b8cdc4ba8e347f8aa68abb6
@@ -30,23 +31,23 @@ properties:
     description: Name used to register service broker via "kafka-service-broker" link
     default: starkandwayne-kafka
 
-  catalog_json:
+  catalog.json:
     description: Override the entire /v2/catalog response
     example: {"services":[{"id":"4a9d3e1a-360a-11e7-b547-236ccc0d6fab","name":"starkandwayne-kafka","description":"Apache Kafka","bindable":true,"tags":["kafka"],"plan_updateable":false,"plans":[{"id":"4820d23c-360a-11e7-9547-d78770a33c5b","name":"topic","description":"Share a topic","free":true,"metadata":{}}],"metadata":{"displayName":"Stark \u0026 Wayne Kafka","imageUrl":"https://svn.apache.org/repos/asf/kafka/site/logos/originals/png/ICON%20-%20Black%20on%20Transparent.png","longDescription":"Apache Kafka","providerDisplayName":"Stark \u0026 Wayne","documentationUrl":"https://www.dingotiles.com/dingo-kafka"}}]}
-    default: ""
-  service_guid:
+    default: /var/vcap/jobs/kafka-service-broker/config/catalog.json
+  catalog.service_guid:
     description: Override the service GUID
     default: "4a9d3e1a-360a-11e7-b547-236ccc0d6fab"
-  service_name:
+  catalog.service_name:
     description: Override the service name
     default: starkandwayne-kafka
-  service_plan_topic_guid:
+  catalog.service_plan_topic_guid:
     description: Override the service plan 'topic' GUID
     default: "4820d23c-360a-11e7-9547-d78770a33c5b"
-  service_plan_shared_guid:
+  catalog.service_plan_shared_guid:
     description: Override the service plan 'shared' GUID
     default: "02fd92c8-c997-11e7-8c02-b7c8cd91bf14"
-  documentation_url:
+  catalog.documentation_url:
     description: URL to additional documentation
     default: https://github.com/starkandwayne/kafka-service-broker/
 

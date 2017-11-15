@@ -1,0 +1,40 @@
+{
+  "services":[
+    {
+      "id":"<%= p('catalog.service_guid') %>",
+      "name":"<%= p('catalog.service_name') %>",
+      "description":"Apache Kafka",
+      "bindable": true,
+      "tags":[
+        "kafka"
+      ],
+      "metadata":{
+        "displayName":"Stark & Wayne Kafka",
+        "imageUrl":"https://svn.apache.org/repos/asf/kafka/site/logos/originals/png/ICON%20-%20Black%20on%20Transparent.png",
+        "longDescription":"Apache Kafka",
+        "providerDisplayName":"Stark & Wayne",
+        "documentationUrl":"<%= p('catalog.documentation_url') %>"
+      },
+      "plans":[
+        {
+          "id":"<%= p('catalog.service_plan_topic_guid') %>",
+          "name":"topic",
+          "description":"Share a single topic on shared Kafka",
+          "metadata": {
+            "cost": 0
+          },
+          "free": true
+        },
+        {
+          "id":"<%= p('catalog.service_plan_shared_guid') %>",
+          "name":"shared",
+          "description":"Create your own topics on shared Kafka",
+          "metadata": {
+            "cost": 0
+          },
+          "free": true
+        }
+      ]
+    }
+  ]
+}

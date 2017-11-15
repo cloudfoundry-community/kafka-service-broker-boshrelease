@@ -1,0 +1,19 @@
+- type: replace
+  path: /instance_groups/name=kafka-service-broker/jobs/name=kafka-service-broker/properties/catalog?/service_guid?
+  value: ((kafka-service-guid))
+
+- type: replace
+  path: /instance_groups/name=kafka-service-broker/jobs/name=kafka-service-broker/properties/catalog/service_name?
+  value: ((kafka-service-name))
+
+- type: replace
+  path: /instance_groups/name=kafka-service-broker/jobs/name=kafka-service-broker/properties/catalog/service_plan_topic_guid?
+  value: ((kafka-service-plan-topic-guid))
+
+- type: replace
+  path: /instance_groups/name=kafka-service-broker/jobs/name=kafka-service-broker/properties/catalog/service_plan_shared_guid?
+  value: ((kafka-service-plan-shared-guid))
+
+- type: replace
+  path: /instance_groups/name=kafka-service-broker/jobs/name=kafka-service-broker/properties/name?
+  value: ((kafka-service-broker-name))

@@ -12,13 +12,7 @@ processes:
     <% zks = link('zookeeper'); zk_port = zks.p('client_port') %>
     ZOOKEEPER_PEERS: <%= zks.instances.map { |instance| "#{instance.address}:#{zk_port}" }.join(",") %>
 
-    BROKER_CATALOG_JSON: "<%= p("catalog_json") %>"
-    BROKER_SERVICE_GUID: "<%= p("service_guid") %>"
-    BROKER_SERVICE_NAME: "<%= p("service_name") %>"
-    BROKER_PLAN0_GUID:   "<%= p("service_plan_topic_guid") %>"
-    BROKER_PLAN1_GUID:   "<%= p("service_plan_shared_guid") %>"
-
-    CATALOG_DOCUMENTATION_URL: "<%= p("documentation_url") %>"
+    BROKER_CATALOG_JSON: "<%= p("catalog.json") %>"
   limits:
     memory: 128M
     open_files: 1024
