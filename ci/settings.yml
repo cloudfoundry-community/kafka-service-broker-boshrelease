@@ -91,10 +91,6 @@ meta:
     icon:          https://www.starkandwayne.com/assets/images/shield-blue-50x50.png
     release_success:  "$BUILD_PIPELINE_NAME: New version of $BUILD_JOB_NAME was detected, and updated base manifests in master branch."
 
-  image:
-    name: starkandwayne/concourse-java
-    tag: "8"
-
 groups:
 - name: aws
   jobs:
