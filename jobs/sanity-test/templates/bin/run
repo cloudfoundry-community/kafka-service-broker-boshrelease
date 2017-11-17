@@ -5,8 +5,8 @@ exec 2>&1
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
-export PATH=/var/vcap/packages/eden-cli/bin:$PATH
-export PATH=/var/vcap/packages/bosh-cli/bin:$PATH
+export PATH=$PATH:/var/vcap/packages/eden-cli/bin
+export PATH=$PATH:/var/vcap/packages/bosh-cli/bin
 
 export HOME=/var/vcap/sys/run/sanity-test/home
 mkdir -p $HOME
@@ -74,6 +74,7 @@ echo "credentials: $credentials"
 header "Test 'topic' plan credentials"
 topicName=$(bosh int <(echo $credentials) --path /topicName)
 kafkaHostnames=$(bosh int <(echo $credentials) --path /hostname)
+zkPeers=$(bosh int <(echo $credentials) --path /zkPeers)
 uri=$(bosh int <(echo $credentials) --path /uri)
 
 if [[ "$topicName" != "$SB_INSTANCE" ]]; then
@@ -84,6 +85,14 @@ if [[ "$uri" != "kafka://$kafkaHostnames/$topicName" ]]; then
   echo "ERROR: expected uri 'kafka://$kafkaHostnames/$topicName' to equal '$uri'"
   errors=1
 fi
+
+# TODO - write as Golang since boshrelease already packaging Golang (else need openjdk + kafka)
+# export testpath=/var/vcap/sys/run/sanity-test/topic-plan
+# mkdir -p $testpath
+# kafka-topics.sh --zookeeper $zkPeers --create --if-not-exists --replication-factor 1 --partitions 1 --topic test > $testpath/demo.out
+# echo "test message" | kafka-console-producer.sh --broker-list $kafkaHostnames --topic test 2>/dev/null
+# kafka-console-consumer.sh --zookeeper $zkPeers --topic test --from-beginning --max-messages 1 >> $testpath/demo.out 2>/dev/null
+# kafka-topics.sh --zookeeper $zkPeers --delete --topic test >> $testpath/demo.out 2>/dev/null
 
 header "Unbind 'topic' plan"
 eden unbind -b $(bosh int $EDEN_CONFIG --path /service_instances/0/bindings/0/id)
