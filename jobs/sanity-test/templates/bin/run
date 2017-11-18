@@ -7,6 +7,7 @@ set -u # report the usage of uninitialized variables
 
 export PATH=$PATH:/var/vcap/packages/eden-cli/bin
 export PATH=$PATH:/var/vcap/packages/bosh-cli/bin
+export PATH=$PATH:/var/vcap/packages/kafka-service-broker/bin
 
 export HOME=/var/vcap/sys/run/sanity-test/home
 mkdir -p $HOME
@@ -67,6 +68,7 @@ eden provision -s starkandwayne-kafka -p topic
 header "Bind 'topic' plan"
 export SB_INSTANCE=$(bosh int $EDEN_CONFIG --path /service_instances/0/id)
 eden bind
+echo
 
 credentials=$(bosh int $EDEN_CONFIG --path /service_instances/0/bindings/0/credentials)
 echo "credentials: $credentials"
@@ -85,6 +87,10 @@ if [[ "$uri" != "kafka://$kafkaHostnames/$topicName" ]]; then
   echo "ERROR: expected uri 'kafka://$kafkaHostnames/$topicName' to equal '$uri'"
   errors=1
 fi
+
+header "Running tests against 'topic' plan credentials"
+# NOTE: kafka-service-broker is currently complained as binary "broker"
+echo "$credentials" | broker sanity-test-topic-plan
 
 # TODO - write as Golang since boshrelease already packaging Golang (else need openjdk + kafka)
 # export testpath=/var/vcap/sys/run/sanity-test/topic-plan
@@ -114,9 +120,9 @@ eden provision -s starkandwayne-kafka -p shared
 header "Bind 'shared' plan"
 export SB_INSTANCE=$(bosh int $EDEN_CONFIG --path /service_instances/0/id)
 eden bind
+echo
 
 credentials=$(bosh int $EDEN_CONFIG --path /service_instances/0/bindings/0/credentials)
-echo
 echo "credentials: $credentials"
 
 header "Test 'shared' plan credentials"
