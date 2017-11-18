@@ -1,6 +1,6 @@
 ---
 name: sanity-test
-packages: [eden-cli, bosh-cli]
+packages: [eden-cli, bosh-cli, kafka-service-broker]
 templates:
   bin/run: bin/run
 
