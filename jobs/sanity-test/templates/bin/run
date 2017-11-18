@@ -138,6 +138,8 @@ if [[ "$uri" != "kafka://$kafkaHostnames" ]]; then
   echo "ERROR: expected uri 'kafka://$kafkaHostnames' to equal '$uri'"
   errors=1
 fi
+# NOTE: kafka-service-broker is currently complained as binary "broker"
+echo "$credentials" | broker sanity-test-shared-plan
 
 header "Unbind 'shard' plan"
 eden unbind -b $(bosh int $EDEN_CONFIG --path /service_instances/0/bindings/0/id)
