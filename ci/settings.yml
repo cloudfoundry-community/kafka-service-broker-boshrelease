@@ -195,3 +195,4 @@ resources:
       access_token: (( grab meta.github.access_token ))
       user: cloudfoundry-community
       repository: kafka-boshrelease
+      check_every: 30m
