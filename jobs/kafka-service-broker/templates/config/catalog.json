@@ -14,7 +14,8 @@
         "longDescription":"<%= p('catalog.longDescription') %>",
         "providerDisplayName":"<%= p('catalog.providerDisplayName') %>",
         "documentationUrl":"<%= p('catalog.documentationUrl') %>",
-        "supportUrl":"<%= p('catalog.supportUrl') %>"
+        "supportUrl":"<%= p('catalog.supportUrl') %>",
+        "shareable": <%= p('catalog.shareable') %>
       },
       "plans":[
         {

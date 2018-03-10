@@ -65,6 +65,9 @@ properties:
   catalog.supportUrl:
     description: URL for support
     default: https://github.com/starkandwayne/kafka-service-broker/issues
+  catalog.shareable:
+    description: Allow service instances to be shared across spaces
+    default: true
 
   port:
     description: Bind to this port

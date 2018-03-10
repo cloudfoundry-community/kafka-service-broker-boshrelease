@@ -15,9 +15,9 @@
     azs: [z1]
     lifecycle: errand
     vm_resources:
-      ram: 1
+      ram: 1024
       cpu: 1
-      ephemeral_disk_size: 10
+      ephemeral_disk_size: 10_000
     stemcell: default
     networks: [{name: default}]
     jobs:
@@ -41,9 +41,9 @@
     azs: [z1]
     lifecycle: errand
     vm_resources:
-      ram: 1
+      ram: 1024
       cpu: 1
-      ephemeral_disk_size: 10
+      ephemeral_disk_size: 10_000
     stemcell: default
     networks: [{name: default}]
     jobs:

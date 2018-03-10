@@ -10,6 +10,8 @@
 
 : ${BOSH_ENVIRONMENT:?required}
 
+set -eu
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../..
 
@@ -31,8 +33,11 @@ cat <<YAML
   value: ${network}
 
 - type: replace
-  path: /instance_groups/name=${ig}/vm_type
+  path: /instance_groups/name=${ig}/vm_type?
   value: ${vm_type}
+
+- type: remove
+  path: /instance_groups/name=${ig}/vm_resources
 
 YAML
 done
