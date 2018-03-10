@@ -114,10 +114,14 @@ cat > tmp/deployment.yml <<YAML
     version: ${release_dev_version}
 YAML
 
+# currently bosh-deployment ships warden-cpi without vm_resources support
 for ig_name in $(spruce json ${MANIFEST_PATH} | jq -r ".instance_groups[].name"); do
 cat >> tmp/deployment.yml <<YAML
+- type: remove
+  path: /instance_groups/name=${ig_name}/vm_resources
+
 - type: replace
-  path: /instance_groups/name=${ig_name}/vm_type
+  path: /instance_groups/name=${ig_name}/vm_type?
   value: ${vm_type}
 
 - type: replace
