@@ -14,7 +14,10 @@
     instances: 1
     azs: [z1]
     lifecycle: errand
-    vm_type: default
+    vm_resources:
+      ram: 1
+      cpu: 1
+      ephemeral_disk_size: 10
     stemcell: default
     networks: [{name: default}]
     jobs:
@@ -37,7 +40,10 @@
     instances: 1
     azs: [z1]
     lifecycle: errand
-    vm_type: default
+    vm_resources:
+      ram: 1
+      cpu: 1
+      ephemeral_disk_size: 10
     stemcell: default
     networks: [{name: default}]
     jobs:

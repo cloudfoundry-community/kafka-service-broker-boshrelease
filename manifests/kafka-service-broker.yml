@@ -6,7 +6,10 @@ instance_groups:
   azs: [z1,z2,z3]
   instances: 3
   persistent_disk_type: 10GB
-  vm_type: default
+  vm_resources:
+    ram: 1
+    cpu: 2
+    ephemeral_disk_size: 10
   stemcell: default
   networks: [{name: default}]
   jobs:
@@ -18,7 +21,10 @@ instance_groups:
   azs: [z1,z2,z3]
   instances: 3
   persistent_disk_type: 10GB
-  vm_type: default
+  vm_resources:
+    ram: 2
+    cpu: 2
+    ephemeral_disk_size: 10
   stemcell: default
   networks: [{name: default}]
   jobs:
@@ -29,7 +35,10 @@ instance_groups:
 - name: kafka-manager
   azs: [z1,z2,z3]
   instances: 1
-  vm_type: default
+  vm_resources:
+    ram: 1
+    cpu: 1
+    ephemeral_disk_size: 10
   stemcell: default
   networks: [{name: default}]
   jobs:
@@ -44,7 +53,10 @@ instance_groups:
 - name: kafka-service-broker
   azs: [z1,z2,z3]
   instances: 1
-  vm_type: default
+  vm_resources:
+    ram: 1
+    cpu: 1
+    ephemeral_disk_size: 10
   stemcell: default
   networks: [{name: default}]
   jobs:
@@ -60,7 +72,10 @@ instance_groups:
   azs: [z1,z2,z3]
   instances: 1
   lifecycle: errand
-  vm_type: default
+  vm_resources:
+    ram: 1
+    cpu: 1
+    ephemeral_disk_size: 10
   stemcell: default
   networks: [{name: default}]
   jobs:
