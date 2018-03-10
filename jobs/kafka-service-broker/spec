@@ -49,7 +49,7 @@ properties:
     default: "02fd92c8-c997-11e7-8c02-b7c8cd91bf14"
   catalog.displayName:
     description: Name of service in marketplace
-    default: Stark & Wayne Kafka
+    default: Stark & Wayne kStreams
   catalog.imageUrl:
     description: URL to image for marketplace
     default: https://svn.apache.org/repos/asf/kafka/site/logos/originals/png/ICON%20-%20Black%20on%20Transparent.png
