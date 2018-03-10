@@ -111,6 +111,6 @@ releases:
   url: git+https://github.com/cloudfoundry-community/kafka-boshrelease
   version: 1.1.2
 - name: kafka-service-broker
-  version: 2.1.0
-  url: https://github.com/cloudfoundry-community/kafka-service-broker-boshrelease/releases/download/v2.1.0/kafka-service-broker-2.1.0.tgz
   sha1: dadd0f852c3f31031c001e982874a7829c58ac09
+  url: https://github.com/cloudfoundry-community/kafka-service-broker-boshrelease/releases/download/v2.1.0/kafka-service-broker-2.1.0.tgz
+  version: 2.1.0
