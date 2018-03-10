@@ -1,37 +1,39 @@
 ---
 meta:
-  name: kafka-service-broker
-  target: sw
-  url: https://ci.starkandwayne.com
+  name:    kafka-service-broker
+  # fly -t ohio-cf login -c https://ci2.starkandwayne.com -n cfcommunity
+  target:  ohio-cf
+  url:     https://ci2.starkandwayne.com
 
   test-errands: sanity-test
 
   git:
-    email:  drnic+bot@starkandwayne.com
-    name:   "Stark & Wayne CI Bot"
+    email:  ((git-commit-email))
+    name:   ((git-commit-name))
 
   aws:
-    access_key: (( vault "secret/aws/cfcommunity:access" ))
-    secret_key: (( vault "secret/aws/cfcommunity:secret" ))
+    bucket: (( grab meta.pipeline ))
+    access_key: ((aws-cfcommunity-access))
+    secret_key: ((aws-cfcommunity-secret))
 
   github:
     branch: master
     owner: cloudfoundry-community
     repo: kafka-service-broker-boshrelease
-    private_key:  (( vault "secret/pipelines/shared/github:private_key" ))
-    access_token: (( vault "secret/pipelines/shared/github:access_token" ))
+    private_key:  ((github-private-key))
+    access_token: ((github-access-token))
 
   bosh-lite:
-    target: https://10.58.111.49:25555
-    username: (( vault "secret/bosh-lites/lite49/users/admin:username" ))
-    password: (( vault "secret/bosh-lites/lite49/users/admin:password" ))
-    cacert:   (( vault "secret/bosh-lites/lite49/certs:rootCA.pem" ))
+    target:   ((bosh-lite-environment))
+    cacert:   ((bosh-lite-ca-cert))
+    username: ((bosh-lite-client))
+    password: ((bosh-lite-client-secret))
     cf:
-      api_url: (( vault "secret/bosh-lites/lite49" "/cf:api_url" ))
-      system_domain: (( vault "secret/bosh-lites/lite49" "/cf:system_domain" ))
-      username: (( vault "secret/bosh-lites/lite49" "/cf:admin_username" ))
-      password: (( vault "secret/bosh-lites/lite49" "/cf:admin_password" ))
-      skip_ssl_validation: (( vault "secret/bosh-lites/lite49" "/cf:skip_ssl_validation" ))
+      system_domain: ((bosh-lite-cf-system-domain))
+      api_url:  https://api.((bosh-lite-cf-system-domain))
+      username: ((bosh-lite-cf-admin-username))
+      password: ((bosh-lite-cf-admin-password))
+      skip_ssl_validation: false
 
   manifest:
     vars: (( concat
@@ -41,112 +43,19 @@ meta:
       "\ncf-admin-password="      meta.bosh-lite.cf.password
       "\ncf-skip-ssl-validation=" meta.bosh-lite.cf.skip_ssl_validation ))
 
-  bosh-aws:
-    alias:    aws-community-ohio
-    ip:       (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/env:ip" ))
-    username: (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/env:username" ))
-    password: (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/env:password" ))
-    cacert:   (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/env:cacert" ))
-    target:   (( concat "https://" meta.bosh-aws.ip ":25555" ))
-    proxy:
-      ip:          (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/proxy:ip" ))
-      username:    (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/proxy:username" ))
-      private_key: (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/proxy:private_key" ))
-    cf:
-      api_url:         (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/cf:api_url" ))
-      username:        admin
-      password:        (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/cf:admin_password" ))
-      system_domain:   (( vault "secret/bosh-envs/" meta.bosh-aws.alias "/cf:system_domain" ))
-
-    broker:
-      test-errands: broker-registrar broker-deregistrar
-      deployment: kafka-sb-testflight
-      deployment-pr: kafka-sb-testflight-pr
-      manifest:
-        path:      manifests/kafka-service-broker.yml
-        operators: "manifests/operators/cf-integration.yml,manifests/operators/service-override.yml"
-        vars: (( concat
-          "\ncf-api-url="             meta.bosh-aws.cf.api_url
-          "\ncf-admin-username="      meta.bosh-aws.cf.username
-          "\ncf-admin-password="      meta.bosh-aws.cf.password
-          "\ncf-skip-ssl-validation=true"
-          "\nkafka-service-broker-name=kafka-sb-testflight"
-          "\nkafka-service-guid=kafka-sb-testflight"
-          "\nkafka-service-name=kafka-sb-testflight"
-          "\nkafka-service-plan-topic-guid=kafka-sb-testflight-topic" ))
-        vars-pr: (( concat
-          "\ncf-api-url="             meta.bosh-aws.cf.api_url
-          "\ncf-admin-username="      meta.bosh-aws.cf.username
-          "\ncf-admin-password="      meta.bosh-aws.cf.password
-          "\ncf-skip-ssl-validation=true"
-          "\nkafka-service-broker-name=kafka-sb-testflight-pr"
-          "\nkafka-service-guid=kafka-sb-testflight-pr"
-          "\nkafka-service-name=kafka-sb-testflight-pr"
-          "\nkafka-service-plan-topic-guid=kafka-sb-testflight-topic-pr" ))
-
   slack:
-    webhook: (( vault "secret/pipelines/bigdata-boshrelease/slack:webhook" ))
+    webhook:  ((slack-webhook))
+    icon:     ((slack-logo))
+    username: ((slack-username))
     channel: '#bigdata-boshrelease'
-    username:      starkandwayne-ci
-    icon:          https://www.starkandwayne.com/assets/images/shield-blue-50x50.png
     release_success:  "$BUILD_PIPELINE_NAME: New version of $BUILD_JOB_NAME was detected, and updated base manifests in master branch."
 
 groups:
-- name: aws
-  jobs:
-  - testflight-aws-broker
 - name: releases
   jobs:
   - kafka-boshrelease
 
 jobs:
-- name: testflight-aws-broker
-  public: true
-  serial: true
-  plan:
-  - name: main
-    do:
-    - name: get
-      aggregate:
-      - { get: git, trigger: false }
-    - name: testflight-broker
-      task: testflight-broker
-      config:
-        platform: linux
-        image_resource:
-          type: docker-image
-          source:
-            repository: (( grab meta.image.name ))
-            tag:        (( grab meta.image.tag ))
-        inputs:
-          - { name: git }
-        run:
-          path: ./git/ci/scripts/testflight
-          args: []
-        params:
-          REPO_ROOT:            git
-          BOSH_ENVIRONMENT:     (( grab meta.bosh-aws.target ))
-          BOSH_CA_CERT:         (( grab meta.bosh-aws.cacert ))
-          BOSH_CLIENT:          (( grab meta.bosh-aws.username ))
-          BOSH_CLIENT_SECRET:   (( grab meta.bosh-aws.password ))
-          PROXY_IP:             (( grab meta.bosh-aws.proxy.ip ))
-          PROXY_USERNAME:       (( grab meta.bosh-aws.proxy.username ))
-          PROXY_PRIVATE_KEY:    (( grab meta.bosh-aws.proxy.private_key ))
-          BOSH_DEPLOYMENT:      (( grab meta.bosh-aws.broker.deployment ))
-          TEST_ERRANDS:         (( grab meta.bosh-aws.broker.test-errands ))
-          MANIFEST_PATH:        (( grab meta.bosh-aws.broker.manifest.path ))
-          MANIFEST_VARS:        (( grab meta.bosh-aws.broker.manifest.vars ))
-          MANIFEST_OP_PATHS:    (( grab meta.bosh-aws.broker.manifest.operators ))
-          AWS_ACCESS_KEY:       (( grab meta.aws.access_key ))
-          AWS_SECRET_KEY:       (( grab meta.aws.secret_key ))
-    on_failure:
-      put: notify
-      params:
-        channel:  (( grab meta.slack.channel ))
-        username: (( grab meta.slack.username ))
-        icon_url: (( grab meta.slack.icon ))
-        text:    '(( concat meta.slack.fail_url " " meta.pipeline ": testflight job failed" ))'
-
 - name: kafka-boshrelease
   public: true
   plan:
