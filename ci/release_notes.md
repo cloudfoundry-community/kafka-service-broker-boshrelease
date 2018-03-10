@@ -4,5 +4,3 @@
   * https://docs.cloudfoundry.org/services/enable-sharing.html
 * Manifest and operator files have switched to `vm_resources` instead of `vm_type: default`
 * `kafka-service-broker` now bundles two sets of sanity test subcommands, which are being used in `sanity-test` errand
-* Bumped kafka-boshrelease to v1.1.2
-* Bumped kafka to v1.1.2
