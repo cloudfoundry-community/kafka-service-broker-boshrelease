@@ -1,0 +1,39 @@
+name: kafka-service-broker
+version: 2.2.0
+commit_hash: 6c74950
+uncommitted_changes: false
+jobs:
+- name: kafka-service-broker
+  version: 68af2343db5cbc7cc84d60b5c2d9882e4fe335e1
+  fingerprint: 68af2343db5cbc7cc84d60b5c2d9882e4fe335e1
+  sha1: 7e4edf3c1fc68b190c639db2a5ca3067332cb3f0
+- name: sanity-test
+  version: ed5b70071b9f8a5f562eda2e3ce7bc7834899f55
+  fingerprint: ed5b70071b9f8a5f562eda2e3ce7bc7834899f55
+  sha1: 2104b305c9a961e512c46be9a2dbd51e89128fa0
+packages:
+- name: bosh-cli
+  version: 5615bf8819723405dee7f77aa9270ebd0b790484
+  fingerprint: 5615bf8819723405dee7f77aa9270ebd0b790484
+  sha1: 9161ce7ed4317bfd6534734362d9e93a468edac2
+  dependencies: []
+- name: eden-cli
+  version: a4eaf690d677ff1d84b8aa5956daf12215cae98c
+  fingerprint: a4eaf690d677ff1d84b8aa5956daf12215cae98c
+  sha1: ad50397ef815e9049d2718504047688ab57e3d12
+  dependencies: []
+- name: go
+  version: d59c808f14866a46a62889d03f92a54d42ce9635
+  fingerprint: d59c808f14866a46a62889d03f92a54d42ce9635
+  sha1: 61372c665caabea27ceecda0a21d1db31e2857c4
+  dependencies: []
+- name: kafka-service-broker
+  version: 48df76c5048a00f9f5cd817dc59ff76f46127853
+  fingerprint: 48df76c5048a00f9f5cd817dc59ff76f46127853
+  sha1: 093cf05b0d348b4d219fa0c5042091e78ccbf824
+  dependencies:
+  - go
+license:
+  version: ac77a509d8b020148f8ce7b3ecce592f89c29c87
+  fingerprint: ac77a509d8b020148f8ce7b3ecce592f89c29c87
+  sha1: 1c96f08f52237d41b65ccd6ed1b7257ea58cc779
