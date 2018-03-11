@@ -12,7 +12,7 @@ meta:
     name:   ((git-commit-name))
 
   aws:
-    bucket: (( grab meta.pipeline ))
+    bucket: (( concat meta.pipeline "-pipeline" ))
     access_key: ((aws-cfcommunity-access))
     secret_key: ((aws-cfcommunity-secret))
 
