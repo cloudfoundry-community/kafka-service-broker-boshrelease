@@ -8,3 +8,4 @@
 * Bumped kafka to v1.1.3
 * Bumped kafka to v1.2.0
 * Bumped kafka to v2.0.0
+* Bumped kafka to v2.1.0
